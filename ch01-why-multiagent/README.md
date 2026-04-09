@@ -7,6 +7,7 @@
 | ファイル | 種類 | 説明 |
 |---------|------|------|
 | `agent-harness.sh` | Shell | C Compilerプロジェクトで使われたエージェントハーネス（無限ループ実行） |
+| `AGENT_PROMPT.md` | Markdown | エージェントへの指示書（`agent-harness.sh` が読み込む） |
 
 ## 使い方
 

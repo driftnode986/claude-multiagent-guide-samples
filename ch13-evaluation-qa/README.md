@@ -7,6 +7,9 @@
 | ファイル | 種類 | 説明 |
 |---------|------|------|
 | `eval-tasks/fix-auth-bypass.yml` | YAML | 認証バイパス修正タスクの評価定義（pass/fail基準付き） |
+| `eval-tasks/auth.py` | Python | テスト対象コード（空パスワードのバイパスバグあり） |
+| `eval-tasks/test_empty_pw_rejected.py` | Python | 空パスワード拒否を検証するグレーダー |
+| `eval-tasks/test_null_pw_rejected.py` | Python | Nullパスワード拒否を検証するグレーダー |
 | `agents/eval-runner.md` | サブエージェント定義 | 評価タスクを実行し結果を記録するエージェント |
 | `settings-regression-hooks.json` | JSON | リグレッション検出 Hooks の `settings.json` 設定 |
 

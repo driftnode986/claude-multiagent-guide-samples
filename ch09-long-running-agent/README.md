@@ -6,9 +6,10 @@
 
 | ファイル | 種類 | 説明 |
 |---------|------|------|
-| `feature-list-example.json` | JSON | 機能リストの構造例（初期化エージェントが生成） |
+| `feature_list.json` | JSON | 機能リストの構造例（初期化エージェントが生成） |
+| `claude-progress.txt` | テキスト | 進捗ファイルのエントリ例 |
+| `init.sh` | シェルスクリプト | 環境セットアップスクリプト（初期化エージェントが生成） |
 | `CLAUDE-long-task.md` | CLAUDE.mdテンプレート | 長期タスク管理のルール |
-| `progress-example.txt` | テキスト | 進捗ファイルのエントリ例 |
 | `agents/project-worker.md` | サブエージェント | 永続メモリを活用する長期プロジェクト作業者 |
 | `long-run.sh` | シェルスクリプト | `claude --agent`によるループ実行スクリプト |
 | `NOTES-template.md` | テンプレート | 構造化ノートテイキングのテンプレート |
