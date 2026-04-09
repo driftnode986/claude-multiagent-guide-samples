@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "TeammateIdle": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/check-teammate-idle.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

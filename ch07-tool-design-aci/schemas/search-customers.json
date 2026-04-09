@@ -1,0 +1,11 @@
+{
+  "name": "search_customers",
+  "parameters": {
+    "query": { "type": "string" },
+    "response_format": {
+      "type": "string",
+      "enum": ["concise", "detailed"],
+      "default": "concise"
+    }
+  }
+}

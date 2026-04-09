@@ -1,0 +1,11 @@
+task:
+  id: "fix-auth-bypass_1"
+  desc: "パスワードフィールドが空の場合の認証バイパスを修正する"
+  graders:
+    - type: deterministic_tests
+      required:
+        - test_empty_pw_rejected.py
+        - test_null_pw_rejected.py
+    - type: state_check
+      expect:
+        security_logs: {event_type: "auth_blocked"}

@@ -1,0 +1,8 @@
+{
+  "name": "search_logs",
+  "parameters": {
+    "query": { "type": "string" },
+    "limit": { "type": "integer", "default": 50 },
+    "offset": { "type": "integer", "default": 0 }
+  }
+}

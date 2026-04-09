@@ -1,0 +1,13 @@
+{
+  "name": "Grep",
+  "parameters": {
+    "output_mode": {
+      "enum": ["content", "files_with_matches", "count"],
+      "description": "content: マッチ行を表示。files_with_matches: ファイルパスのみ。count: マッチ数のみ"
+    },
+    "head_limit": {
+      "type": "number",
+      "description": "出力の先頭N行に制限"
+    }
+  }
+}

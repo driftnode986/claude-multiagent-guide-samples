@@ -1,0 +1,10 @@
+---
+name: example-agent
+mcpServers:
+  - server-name:
+      type: stdio
+      command: npx
+      args: ["-y", "@package/mcp-server"]
+      env:
+        API_KEY: "${API_KEY}"
+---

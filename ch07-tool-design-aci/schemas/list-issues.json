@@ -1,0 +1,8 @@
+{
+  "name": "list_issues",
+  "parameters": {
+    "status": { "enum": ["open", "closed", "in_progress"] },
+    "assignee": { "type": "string" },
+    "priority": { "enum": ["critical", "high", "medium", "low"] }
+  }
+}

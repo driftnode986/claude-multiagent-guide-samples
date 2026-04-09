@@ -1,0 +1,9 @@
+{
+  "name": "Read",
+  "parameters": {
+    "file_path": {
+      "type": "string",
+      "description": "読み取るファイルの絶対パス（相対パスは不可）"
+    }
+  }
+}
