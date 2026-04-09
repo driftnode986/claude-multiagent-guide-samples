@@ -1,12 +1,8 @@
 ---
 name: eval-runner
+description: 評価タスクを実行し結果を記録する
 model: sonnet
-tools:
-  - Bash
-  - Read
-  - Write
-  - Glob
-  - Grep
+tools: Bash, Read, Write, Glob, Grep
 ---
 
 評価タスクを実行し、結果を記録するエージェントです。
