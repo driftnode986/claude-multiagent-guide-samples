@@ -1,0 +1,12 @@
+[project]
+name = "ch07-knowledge-base-mcp"
+version = "0.1.0"
+description = "ACI 6 原則を体現する FastMCP サーバーの最小実装"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]>=1.12",
+    "pydantic>=2.0",
+]
+
+[project.scripts]
+ch07-server = "server:mcp.run"
