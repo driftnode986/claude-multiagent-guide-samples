@@ -8,7 +8,7 @@
 |------------|--------|------|-----------|
 | `ch01-why-multiagent/` | Ch1 | なぜマルチエージェントか | 1 |
 | `ch02-five-patterns/` | Ch2 | 5つのパターン＋動くサンプル | 4 |
-| `ch03-subagent-basics/` | Ch3 | サブエージェント基礎 | — |
+| `ch03-subagent-basics/` | Ch3 | サブエージェント基礎 | 5 |
 | `ch04-custom-subagent/` | Ch4 | カスタムサブエージェント作成 | 5 |
 | `ch05-subagent-mcp/` | Ch5 | サブエージェント + MCP連携 | 4 |
 | `ch06-orchestrator-design/` | Ch6 | オーケストレーター設計 | 2 |
@@ -19,7 +19,7 @@
 | `ch11-agent-team-concept/` | Ch11 | エージェントチームの概念と有効化 | 2 |
 | `ch12-parallel-development/` | Ch12 | 実践・並列開発 | 4 |
 | `ch13-evaluation-qa/` | Ch13 | 評価・品質保証 | 3 |
-| `ch14-production-reliability/` | Ch14 | 本番信頼性 | — |
+| `ch14-production-reliability/` | Ch14 | 本番信頼性 | 3 |
 | `appendix-a-reference/` | 付録A | コマンド・設定リファレンス | 3 |
 
 ## ファイルの種類

@@ -31,4 +31,4 @@ cat CLAUDE-delegation-policy.md >> your-project/CLAUDE.md
 ## 前提条件
 
 - Claude Code CLI（最新版）
-- 委譲先のサブエージェント（code-reviewer, test-writer, doc-generator）が`.claude/agents/`に配置済みであること
+- 委譲先のサブエージェントが`.claude/agents/`に配置済みであること。本 repo では ch04 に `code-reviewer.md` / `test-writer.md` / `project-expert.md` / `security-auditor.md` の4つを用意しているので、必要なものを `.claude/agents/` にコピーするか、`CLAUDE-delegation-policy.md` 側の委譲ルールを既存のエージェントに合わせて調整してください
