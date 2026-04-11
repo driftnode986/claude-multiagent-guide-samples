@@ -66,5 +66,4 @@ cat ch11-agent-team-concept/settings-agent-teams.json
 ## 書籍情報
 
 - タイトル: Claude Code マルチエージェント実践ガイド
-- シリーズ: Claude Code Vol.5
 - 著者: 牧野 誠
