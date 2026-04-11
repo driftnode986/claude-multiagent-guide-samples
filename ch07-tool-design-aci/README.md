@@ -64,7 +64,7 @@ Claude Code セッションで以下のように質問すると、`kb__search_ar
 |------|----------------------|
 | 1. 適切なツールを選ぶ | 全件取得 `list_articles` を作らず、`search_articles` のみ提供 |
 | 2. ツールを統合する | カテゴリ・キーワード・ページネーションを 1 ツールに集約 |
-| 3. 名前空間で境界を明確にする | サーバー名 `knowledge-base` → `kb__search_articles` の形式 |
+| 3. 名前空間で境界を明確にする | `claude mcp add` の登録名 `kb` → `mcp__kb__search_articles` |
 | 4. 意味のあるコンテキストを返す | UUID ではなく `kb-deploy-002` 形式の人間可読な ID |
 | 5. トークン効率を最適化する | `response_format` (concise/detailed) と `limit/offset` |
 | 6. ツール説明をプロンプトエンジニアリング | docstring に使用場面・対象外・ヒントを記述 |

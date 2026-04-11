@@ -6,7 +6,7 @@ ACI 6 原則を体現する FastMCP サーバー実装。
 検証環境: mcp[cli] >= 1.12, Python >= 3.10
 起動方法:
     uv run server.py
-Claude Code への登録:
+Claude Code への登録（登録名 kb と FastMCP 内部名を一致させる）:
     claude mcp add --transport stdio kb -- uv run /path/to/server.py
 """
 
@@ -16,7 +16,7 @@ from pydantic import BaseModel, Field
 
 from mcp.server.fastmcp import FastMCP
 
-mcp = FastMCP("knowledge-base")
+mcp = FastMCP("kb")
 
 # --- データセット（本番では DB / API / ベクトル検索に置き換える） ---
 ARTICLES: dict[str, dict] = {
