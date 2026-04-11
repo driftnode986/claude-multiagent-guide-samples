@@ -113,15 +113,16 @@ def search_articles(
     if offset < 0:
         raise ValueError("offset は 0 以上で指定してください")
 
-    q = query.lower()
+    terms = query.lower().split()
     matches = [
         (aid, a)
         for aid, a in ARTICLES.items()
         if (category is None or a["category"] == category)
-        and (
-            q in a["title"].lower()
-            or q in a["summary"].lower()
-            or q in a["body"].lower()
+        and all(
+            t in a["title"].lower()
+            or t in a["summary"].lower()
+            or t in a["body"].lower()
+            for t in terms
         )
     ]
     total = len(matches)
