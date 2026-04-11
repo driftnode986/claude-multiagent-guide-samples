@@ -28,8 +28,19 @@ cd "$ROOT_DIR"
 echo "=== 長期実行プロジェクトの初期化 ==="
 echo "対象ディレクトリ: $(pwd)"
 
-# [1/5] git リポジトリの確認
-if [ ! -d .git ]; then
+# [0/5] helper スクリプトを ROOT_DIR に配置 (worktree でも動くよう SCRIPT_DIR != ROOT_DIR を許容)
+if [ "$SCRIPT_DIR" != "$(pwd)" ]; then
+    for helper in generate_features.py next_feature.py mark_passed.py update_progress.sh; do
+        if [ ! -f "$helper" ]; then
+            cp "$SCRIPT_DIR/$helper" "$helper"
+            chmod +x "$helper"
+        fi
+    done
+    echo "[0/5] helper スクリプトを配置"
+fi
+
+# [1/5] git リポジトリの確認 (worktree の .git ファイルにも対応)
+if ! git rev-parse --git-dir >/dev/null 2>&1; then
     echo "[1/5] git リポジトリを初期化"
     git init -q
 else

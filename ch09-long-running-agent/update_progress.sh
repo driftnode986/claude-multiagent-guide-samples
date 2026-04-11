@@ -15,7 +15,7 @@
 
 set -euo pipefail
 
-if [ "$#" -lt 2 ]; then
+if [ "$#" -ne 2 ]; then
     echo "usage: $0 <completed> <next-step>" >&2
     exit 2
 fi
