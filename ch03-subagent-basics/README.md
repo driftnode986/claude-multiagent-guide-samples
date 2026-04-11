@@ -23,14 +23,9 @@ cd ch03-subagent-basics/sample-codebase
 claude
 ```
 
-Claude Code を起動したら `demo-prompts.md` の例1のプロンプトをそのまま貼り付けてください。Claude Code が Explore サブエージェントを自動的に呼び出し、4つのファイルを発見・要約する様子が観察できます。
+Claude Code を起動したら `demo-prompts.md` の例1のプロンプトをそのまま貼り付けてください。Claude Code が Explore サブエージェントに調査を委譲して4つのファイルを発見・要約することが期待されます (実際にどのサブエージェントが起動するかは Claude Code のバージョンとプロンプトの言い回しによって変動するため、`demo-prompts.md` の観察ポイントを参考に動作を確認してください)。
 
-例3 (Git worktree 隔離) を試す場合は、先に `sample-codebase/` を git リポジトリにしておく必要があります。
-
-```bash
-cd ch03-subagent-basics/sample-codebase
-git init && git add . && git commit -m "initial"
-```
+例3 (Git worktree 隔離) は git リポジトリ内でしか動きません。本 companion repo 自体が git 管理下にあるので、`git clone` してから `sample-codebase/` に `cd` するだけで試せます。新たに `git init` を実行する必要はありません (実行するとネストした git リポジトリになってしまいます)。
 
 ## サンプルファイルの位置づけ
 
