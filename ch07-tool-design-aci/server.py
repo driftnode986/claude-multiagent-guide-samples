@@ -110,6 +110,8 @@ def search_articles(
         )
     if limit < 1 or limit > 100:
         raise ValueError("limit は 1〜100 の範囲で指定してください")
+    if offset < 0:
+        raise ValueError("offset は 0 以上で指定してください")
 
     q = query.lower()
     matches = [
