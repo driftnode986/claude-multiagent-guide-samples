@@ -1,0 +1,4 @@
+{"session":"s1","turn":1,"model":"sonnet","input_tokens":1200,"output_tokens":340}
+{"session":"s1","turn":2,"model":"sonnet","input_tokens":2100,"output_tokens":580}
+{"session":"s1","turn":3,"model":"opus","input_tokens":15000,"output_tokens":4200}
+{"session":"s2","turn":1,"model":"haiku","input_tokens":800,"output_tokens":120}
