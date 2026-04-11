@@ -27,6 +27,15 @@ PRICING: dict[str, dict[str, float]] = {
 }
 
 
+def _nonneg_int(value: object, field: str) -> int:
+    """非負整数として検証する。型違いや負値は ValueError。"""
+    if not isinstance(value, int) or isinstance(value, bool):
+        raise ValueError(f"{field} must be int, got {type(value).__name__}")
+    if value < 0:
+        raise ValueError(f"{field} must be >= 0, got {value}")
+    return value
+
+
 def usd_for(model: str, input_tokens: int, output_tokens: int) -> float:
     """1イベント分のコストを USD で返す。未知モデルは ValueError。"""
     price = PRICING.get(model)
@@ -36,21 +45,21 @@ def usd_for(model: str, input_tokens: int, output_tokens: int) -> float:
 
 
 def aggregate(log_path: Path) -> dict:
-    """ログ全体を集計し、累積コストとセッション別最大ターン数を返す。"""
+    """ログを 1 行ずつストリーミング集計する。"""
     total_usd = 0.0
     turns_by_session: dict[str, int] = {}
-    for raw in log_path.read_text(encoding="utf-8").splitlines():
-        line = raw.strip()
-        if not line:
-            continue
-        event = json.loads(line)
-        total_usd += usd_for(
-            event["model"], event["input_tokens"], event["output_tokens"]
-        )
-        sid = event.get("session", "default")
-        turns_by_session[sid] = max(
-            turns_by_session.get(sid, 0), event.get("turn", 0)
-        )
+    with log_path.open("r", encoding="utf-8") as fh:
+        for raw in fh:
+            line = raw.strip()
+            if not line:
+                continue
+            event = json.loads(line)
+            in_tok = _nonneg_int(event["input_tokens"], "input_tokens")
+            out_tok = _nonneg_int(event["output_tokens"], "output_tokens")
+            total_usd += usd_for(event["model"], in_tok, out_tok)
+            sid = event.get("session", "default")
+            turn = _nonneg_int(event.get("turn", 0), "turn")
+            turns_by_session[sid] = max(turns_by_session.get(sid, 0), turn)
     return {
         "total_usd": total_usd,
         "max_turns": max(turns_by_session.values(), default=0),
@@ -71,7 +80,7 @@ def main() -> int:
 
     try:
         stats = aggregate(args.log)
-    except (ValueError, KeyError, json.JSONDecodeError) as exc:
+    except (ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
         print(f"[ERROR] failed to parse {args.log}: {exc}", file=sys.stderr)
         return 2
     summary = (
