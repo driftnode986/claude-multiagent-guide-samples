@@ -1,34 +1,34 @@
-# Ch06: オーケストレーター設計
+# Ch06: Orchestrator Design
 
-書籍「Claude Code マルチエージェント実践ガイド」第6章のサンプルコードです。
+Sample code for Chapter 6 of "Multi-Agent Development with Claude Code."
 
-## ファイル一覧
+## Files
 
-| ファイル | 種類 | 説明 |
-|---------|------|------|
-| `agents/coordinator.md` | サブエージェント定義 | カスタムオーケストレーター（`claude --agent`で起動） |
-| `CLAUDE-delegation-policy.md` | CLAUDE.md記述例 | プロジェクトのCLAUDE.mdに追加する委譲ルールの例 |
+| File | Type | Description |
+|------|------|-------------|
+| `agents/coordinator.md` | Subagent definition | Custom orchestrator (launched with `claude --agent`) |
+| `CLAUDE-delegation-policy.md` | CLAUDE.md example | Delegation rules to add to your project's `CLAUDE.md` |
 
-## 使い方
+## Usage
 
-### カスタムオーケストレーターの起動
+### Launch the custom orchestrator
 
 ```bash
-# coordinator.md を .claude/agents/ に配置後
+# Place coordinator.md in .claude/agents/, then:
 claude --agent coordinator
 ```
 
-`coordinator`はOpusモデルで動作し、タスクの複雑さに応じてサブエージェントへの委譲を判断します。
+The `coordinator` runs on the Opus model and decides when to delegate to subagents based on task complexity.
 
-### CLAUDE.mdへの委譲ルール追加
+### Add delegation rules to CLAUDE.md
 
-`CLAUDE-delegation-policy.md`の内容をプロジェクトの`CLAUDE.md`に追記すると、メインセッションの振る舞いを誘導できます。
+Append the contents of `CLAUDE-delegation-policy.md` to your project's `CLAUDE.md` to guide the main session's delegation behavior:
 
 ```bash
 cat CLAUDE-delegation-policy.md >> your-project/CLAUDE.md
 ```
 
-## 前提条件
+## Prerequisites
 
-- Claude Code CLI（最新版）
-- 委譲先のサブエージェントが`.claude/agents/`に配置済みであること。本 repo では ch04 に `code-reviewer.md` / `test-writer.md` / `project-expert.md` / `security-auditor.md` の4つを用意しているので、必要なものを `.claude/agents/` にコピーするか、`CLAUDE-delegation-policy.md` 側の委譲ルールを既存のエージェントに合わせて調整してください
+- Claude Code CLI (latest version)
+- Subagents must be placed in `.claude/agents/` before launching the coordinator. This repo provides `code-reviewer.md` / `test-writer.md` / `project-expert.md` / `security-auditor.md` in ch04. Copy the ones you need to `.claude/agents/`, or adjust the delegation rules in `CLAUDE-delegation-policy.md` to match your existing agents.

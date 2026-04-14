@@ -1,10 +1,10 @@
-## マルチエージェント方針
+## Multi-Agent Policy
 
-以下のタスクは対応するサブエージェントに委譲してください:
+Delegate the following tasks to the corresponding subagent:
 
-- コードレビュー → code-reviewer サブエージェント
-- テスト作成 → test-writer サブエージェント
-- ドキュメント更新 → doc-generator サブエージェント
+- Code review -> code-reviewer subagent
+- Test creation -> test-writer subagent
+- Documentation updates -> doc-generator subagent
 
-複数のサブエージェントが必要な場合は、独立したタスクを
-並列（run_in_background: true）で実行してください。
+When multiple subagents are needed, delegate independent tasks
+in parallel (run_in_background: true).
