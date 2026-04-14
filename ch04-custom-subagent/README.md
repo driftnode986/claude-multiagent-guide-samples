@@ -1,33 +1,33 @@
-# Ch04: カスタムサブエージェント作成
+# Ch04: Building Custom Subagents
 
-書籍「Claude Code マルチエージェント実践ガイド」第4章のサンプルコードです。
+Sample code for Chapter 4 of *Multi-Agent Development with Claude Code*.
 
-## ファイル一覧
+## Files
 
-| ファイル | 種類 | 説明 |
-|---------|------|------|
-| `agents/code-reviewer.md` | サブエージェント定義 | 基本的なコードレビューエージェント |
-| `agents/test-writer.md` | サブエージェント定義 | テスト自動生成エージェント |
-| `agents/security-auditor.md` | サブエージェント定義 | OWASP Top 10対応セキュリティ監査エージェント |
-| `agents/project-expert.md` | サブエージェント定義 | 永続メモリ付きプロジェクト知識エージェント |
-| `scripts/validate-readonly-query.sh` | Shell | PreToolUseフック: SQL書き込み操作をブロックするバリデーション |
+| File | Type | Description |
+|------|------|-------------|
+| `agents/code-reviewer.md` | Subagent definition | Basic code review agent |
+| `agents/test-writer.md` | Subagent definition | Automated test generation agent |
+| `agents/security-auditor.md` | Subagent definition | OWASP Top 10 security audit agent |
+| `agents/project-expert.md` | Subagent definition | Project knowledge agent with persistent memory |
+| `scripts/validate-readonly-query.sh` | Shell | PreToolUse hook: blocks SQL write operations |
 
-## 使い方
+## Usage
 
-### サブエージェント定義ファイルの配置
+### Installing Subagent Definitions
 
-`agents/` 内のファイルをプロジェクトの `.claude/agents/` にコピーしてください。
+Copy the files from `agents/` into your project's `.claude/agents/` directory:
 
 ```bash
 mkdir -p .claude/agents
 cp agents/*.md .claude/agents/
 ```
 
-Claude Codeが自動的にサブエージェントを認識し、タスクに応じて選択します。
+Claude Code automatically discovers and selects subagents based on task context.
 
-### バリデーションスクリプトの配置
+### Installing the Validation Script
 
-`scripts/validate-readonly-query.sh` は `db-reader` サブエージェントのPreToolUseフックとして使用します。
+`scripts/validate-readonly-query.sh` is used as a PreToolUse hook for the `db-reader` subagent:
 
 ```bash
 mkdir -p scripts
@@ -35,7 +35,7 @@ cp scripts/validate-readonly-query.sh scripts/
 chmod +x scripts/validate-readonly-query.sh
 ```
 
-## 前提条件
+## Prerequisites
 
-- Claude Code CLI（最新版）
-- jq（バリデーションスクリプトで使用）
+- Claude Code CLI (latest version)
+- jq (used by the validation script)

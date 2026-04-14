@@ -1,11 +1,11 @@
 #!/bin/bash
-# 書籍「Claude Code マルチエージェント実践ガイド」第4章
-# ./scripts/validate-readonly-query.sh
+# Ch04 - Multi-Agent Development with Claude Code
+# PreToolUse hook: block SQL write operations
 
 INPUT=$(cat)
 COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command // empty')
 
-# SQL書き込み操作をブロック（大文字小文字不問）
+# Block SQL write operations (case-insensitive)
 if echo "$COMMAND" | grep -iE \
   '\b(INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|TRUNCATE)\b' \
   > /dev/null; then
