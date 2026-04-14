@@ -1,6 +1,6 @@
 ---
 name: deployment-checker
-description: デプロイ後の動作確認を実行する
+description: Verify application health after a deployment
 mcpServers:
   - playwright:
       type: stdio
@@ -12,7 +12,7 @@ mcpServers:
       args: ["-y", "@datadog/mcp-server"]
 ---
 
-デプロイ後に以下を確認してください:
-1. Playwrightでフロントエンドの主要画面を巡回
-2. Datadogでエラー率とレイテンシを確認
-3. 異常があれば即座に報告
+After a deployment, verify the following:
+1. Use Playwright to navigate critical frontend screens
+2. Check error rates and latency in Datadog
+3. Report any anomalies immediately

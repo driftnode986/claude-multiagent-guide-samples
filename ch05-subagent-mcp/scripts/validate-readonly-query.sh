@@ -1,14 +1,15 @@
 #!/bin/bash
-# 書籍「Claude Code マルチエージェント実践ガイド」第5章
+# "Multi-Agent Development with Claude Code" - Chapter 5
 # ./scripts/validate-readonly-query.sh
+# PreToolUse hook: blocks write SQL statements
 
 INPUT=$(cat)
 COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command // empty')
 
-# 書き込み系SQLをブロック（大文字小文字を区別しない）
+# Block write SQL statements (case-insensitive)
 if echo "$COMMAND" | grep -iE '\b(INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|TRUNCATE)\b' > /dev/null; then
-  echo "Blocked: SELECT文のみ実行可能です"
-  exit 2  # exit 2 = ツール実行をブロック
+  echo "Blocked: only SELECT queries are allowed"
+  exit 2  # exit 2 = block tool execution
 fi
 
 exit 0

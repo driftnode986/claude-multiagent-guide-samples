@@ -1,45 +1,45 @@
-# Ch05: サブエージェント + MCP連携
+# Ch05: Connecting Subagents to External Tools via MCP
 
-書籍「Claude Code マルチエージェント実践ガイド」第5章のサンプルコードです。
+Sample code for Chapter 5 of "Multi-Agent Development with Claude Code."
 
-## ファイル一覧
+## Files
 
-| ファイル | 種類 | 説明 |
-|---------|------|------|
-| `agents/web-scraper.md` | サブエージェント定義 | Playwright MCPを使ったWebスクレイピングエージェント |
-| `agents/pr-reviewer.md` | サブエージェント定義 | GitHub MCPを使ったPRコードレビューエージェント |
-| `agents/deployment-checker.md` | サブエージェント定義 | Playwright + Datadog MCPを使ったデプロイ後の動作確認エージェント |
-| `scripts/validate-readonly-query.sh` | シェルスクリプト | SQL書き込みをブロックするPreToolUseフックスクリプト |
+| File | Type | Description |
+|------|------|-------------|
+| `agents/web-scraper.md` | Subagent definition | Web scraping agent using Playwright MCP |
+| `agents/pr-reviewer.md` | Subagent definition | PR code review agent using GitHub MCP |
+| `agents/deployment-checker.md` | Subagent definition | Post-deploy verification agent using Playwright + Datadog MCP |
+| `scripts/validate-readonly-query.sh` | Shell script | PreToolUse hook that blocks SQL write operations |
 
-## 使い方
+## Usage
 
-### サブエージェント定義の配置
+### Place the subagent definitions
 
-`.md`ファイルをプロジェクトの`.claude/agents/`ディレクトリにコピーしてください。
+Copy the `.md` files into your project's `.claude/agents/` directory:
 
 ```bash
 cp agents/*.md your-project/.claude/agents/
 ```
 
-### バリデーションスクリプトの配置
+### Place the validation script
 
 ```bash
 cp scripts/validate-readonly-query.sh your-project/scripts/
 chmod +x your-project/scripts/validate-readonly-query.sh
 ```
 
-### サブエージェントの呼び出し
+### Invoke a subagent
 
-Claude Codeのメインセッションで自然言語で指示するだけで、適切なサブエージェントが自動選択されます。
+Describe the task in natural language from the main session -- Claude Code selects the appropriate subagent automatically:
 
 ```
-あなた: https://example.com/products のページから全商品の名前と価格を収集して
-あなた: PR #42 をレビューして
+You: Scrape all product names and prices from https://example.com/products
+You: Review PR #42
 ```
 
-## 前提条件
+## Prerequisites
 
-- Claude Code CLI（最新版）
-- Node.js（npxでMCPサーバーを起動するため）
-- GitHub MCP利用時: GitHubの認証設定
-- バリデーションスクリプト利用時: jq コマンド
+- Claude Code CLI (latest version)
+- Node.js (to start MCP servers via npx)
+- GitHub MCP: GitHub authentication configured
+- Validation script: jq installed
