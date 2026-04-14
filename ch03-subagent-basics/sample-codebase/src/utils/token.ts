@@ -1,5 +1,5 @@
-// token.ts — セッションクッキー検証ユーティリティ (デモ用)。
-// Ch3 例1 で「token.ts にトークン検証」と言及される擬似実装。
+// token.ts — Session cookie verification utility (demo).
+// Referenced in Ch3 Example 1 as the token verification module.
 export type Session = { userId: string; expiresAt: number };
 
 const SESSIONS: Record<string, Session> = {

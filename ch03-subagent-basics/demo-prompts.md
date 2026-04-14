@@ -1,50 +1,53 @@
-# Ch03 デモプロンプト集
+# Ch03 Demo Prompts
 
-書籍 Ch3 で示した3つの実践例を、自分の手で再現するためのプロンプト集です。`sample-codebase/` を Claude Code から開いて以下を試してみてください。
+Prompts to reproduce the three hands-on examples from Chapter 3. Open `sample-codebase/` in Claude Code and try each one.
 
 ```bash
 cd ch03-subagent-basics/sample-codebase
 claude
 ```
 
-各プロンプトでは、Claude Code が組み込みサブエージェントを自動的に呼び出すかどうかを観察するのが目的です。実際のサブエージェント呼び出しはセッションログ (`/transcript`) や Hooks で確認できます。
+The goal is to observe which built-in subagent Claude Code selects automatically. Verify via session logs (`/transcript`) or Hooks.
 
-## 例1: コードベース調査の委譲 (Explore が自動選択される想定)
-
-```text
-このプロジェクトの認証関連ファイルを特定して、各ファイルでどのように認証が
-使われているかを要約してください。
-```
-
-**観察ポイント**:
-
-- Claude Code が Explore サブエージェントに調査を委譲する
-- メインセッションの context は要約結果のみで満たされる
-- Explore は読み取り専用なので、ファイルが書き換わらない
-
-**期待される結果**: `src/middleware/auth.ts`, `src/routes/protected.ts`, `src/utils/token.ts`, `tests/auth.test.ts` の4ファイルが特定され、それぞれの役割が短くまとめられる。
-
-## 例2: 並列レビュー (汎用サブエージェントが複数バックグラウンド起動される想定)
-
-`sample-codebase/` に擬似的な PR 差分を想定して以下を投げます。
+## Example 1: Codebase Investigation (Explore expected)
 
 ```text
-src/middleware/auth.ts と src/utils/token.ts のセキュリティ・パフォーマンス・
-コーディング規約の3観点を、それぞれ別のサブエージェントに並列でレビュー
-させてください。最後に統一レポートにまとめてください。
+Identify all authentication-related files in this project and summarize
+how authentication is used in each file.
 ```
 
-**観察ポイント**:
+**What to observe**:
 
-- Claude Code が3つの汎用サブエージェントを `run_in_background: true` で同時起動する
-- 各サブエージェントが独立したコンテキストで分析する
-- メインエージェントが3つの結果を統合する
+- Claude Code delegates investigation to the Explore subagent
+- The main session context receives only the summary, not raw file contents
+- Explore is read-only -- no files are modified
 
-**期待される結果**: セキュリティ (例: ハードコードされた `demo-cookie`)、パフォーマンス (例: O(1) lookup の妥当性)、規約 (例: 命名・型定義) の3観点が分けて報告される。
+**Expected result**: Four files identified (`src/middleware/auth.ts`, `src/routes/protected.ts`, `src/utils/token.ts`, `tests/auth.test.ts`) with a brief role summary for each.
 
-## 例3: Git worktree による隔離実行 (isolation: worktree)
+## Example 2: Parallel Review (multiple general-purpose subagents expected)
 
-worktree 機能は git リポジトリ内でしか動かないため、本サンプルを使う場合は companion repo 自体を clone して、その中で Claude Code を起動してください。
+Using `sample-codebase/` as a simulated PR:
+
+```text
+Review src/middleware/auth.ts and src/utils/token.ts from three perspectives,
+each handled by a separate subagent running in parallel:
+1. Security vulnerabilities
+2. Performance issues
+3. Coding standard violations
+Combine the results into a unified report.
+```
+
+**What to observe**:
+
+- Claude Code spawns three general-purpose subagents with `run_in_background: true`
+- Each subagent analyzes independently in its own context
+- The main agent synthesizes the three results
+
+**Expected result**: Separate findings for security (e.g., hardcoded `demo-cookie`), performance (e.g., O(1) lookup adequacy), and coding standards (e.g., naming, type definitions).
+
+## Example 3: Git Worktree Isolation (isolation: worktree)
+
+The worktree feature requires a Git repository. Clone the companion repo and launch Claude Code from within it:
 
 ```bash
 git clone https://github.com/driftnode986/claude-multiagent-guide-samples.git
@@ -52,23 +55,23 @@ cd claude-multiagent-guide-samples/ch03-subagent-basics/sample-codebase
 claude
 ```
 
-別の場所に切り出して試したい場合は、コピー先で改めて `git init` してください (companion repo の中で `git init` するとネストした git リポジトリになってしまうため)。
+If you want to try from a separate location, run `git init` there first (don't run `git init` inside the companion repo -- it would create a nested Git repository).
 
 ```text
-auth.ts に対して、JWT ベースの実装に置き換える実験を Git worktree 経由で
-試してください。元のワークツリーには影響を与えないでください。
+Experiment with replacing auth.ts with a JWT-based implementation using
+a Git worktree. Do not modify the main worktree.
 ```
 
-**観察ポイント**:
+**What to observe**:
 
-- Claude Code が `isolation: "worktree"` でサブエージェントを起動する
-- 一時的な worktree が作成され、メインのワークツリーは変更されない
-- 成功すれば worktree のパスとブランチ名が返される
+- Claude Code spawns a subagent with `isolation: "worktree"`
+- A temporary worktree is created; the main worktree remains unchanged
+- On success, the worktree path and branch name are returned
 
-**期待される結果**: 元の `auth.ts` は変更されず、新しいブランチに JWT 実装の試案が乗る。
+**Expected result**: The original `auth.ts` is unchanged. A new branch contains the experimental JWT implementation.
 
-## 注意事項
+## Notes
 
-- これらのサンプルファイルは TypeScript の型解決を意図的に省略しており、コンパイルは通りません。あくまで Explore がファイルを発見しやすくするためのスタブです。
-- どのサブエージェントが起動されるかは Claude Code のバージョンと自動選択ロジックによって変動します。プロンプトの言い回しを変えると別のサブエージェントが選ばれることもあります。
-- 例2 と 例3 は「Claude Code がそう判断する可能性が高い」想定であり、必ずバックグラウンド起動・worktree 隔離されるとは限りません。Hooks やトランスクリプトで実際の動作を確認してください。
+- These sample files intentionally omit TypeScript type resolution and won't compile. They're stubs designed for Explore to discover and summarize.
+- Which subagent gets invoked depends on the Claude Code version and its selection logic. Rewording the prompt may trigger a different subagent.
+- Examples 2 and 3 describe the *likely* behavior -- background spawning and worktree isolation aren't guaranteed. Check `/transcript` or Hooks to confirm actual behavior.

@@ -1,5 +1,5 @@
-// auth.ts — セッション Cookie ベースの最小認証ミドルウェア (デモ用)。
-// Ch3 例1「認証ミドルウェアを JWT 方式に変更してください」のターゲット。
+// auth.ts — Minimal session-cookie-based auth middleware (demo).
+// Target for Ch3 Example 1: "Migrate auth middleware to JWT."
 import type { Request, Response, NextFunction } from "./types";
 import { verifySessionCookie } from "../utils/token";
 

@@ -1,5 +1,5 @@
-// protected.ts — 認証必須エンドポイント (デモ用)。
-// Ch3 例1 で「protected.ts が 15 ルートで使用」と言及される擬似実装。
+// protected.ts — Protected endpoints requiring authentication (demo).
+// Referenced in Ch3 Example 1 as a consumer of the auth middleware.
 import { requireAuth } from "../middleware/auth";
 import type { Router } from "./types";
 
