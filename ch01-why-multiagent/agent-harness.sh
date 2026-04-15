@@ -1,11 +1,11 @@
 #!/bin/bash
-# 書籍「Claude Code マルチエージェント実践ガイド」第1章
-# 各エージェントをDockerコンテナ内で無限ループ実行
+# Multi-Agent Development with Claude Code -- Chapter 1
+# Run each agent in an infinite loop inside a Docker container
 while true; do
     COMMIT=$(git rev-parse --short=6 HEAD)
     LOGFILE="agent_logs/agent_${COMMIT}.log"
 
-    # エージェントがタスクを自律的に選択・実行
+    # Agent autonomously selects and executes tasks
     claude --dangerously-skip-permissions \
            -p "$(cat AGENT_PROMPT.md)" \
            --model claude-opus-X-Y &> "$LOGFILE"

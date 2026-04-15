@@ -1,10 +1,10 @@
 #!/bin/bash
-# 書籍「Claude Code マルチエージェント実践ガイド」第2章
-# セクショニング: コードレビューを3観点で並列実行
-claude -p "以下のPRを3つの観点で同時にレビューしてください:
-1. セキュリティの脆弱性
-2. パフォーマンスの問題
-3. コーディング規約の違反
+# Multi-Agent Development with Claude Code -- Chapter 2
+# Parallelization: review code from three perspectives simultaneously
+claude -p "Review the following PR from three perspectives at once:
+1. Security vulnerabilities
+2. Performance issues
+3. Coding convention violations
 
-各観点をサブエージェントに委譲し、並列で実行してください。
-対象: $(git diff main...HEAD)"
+Delegate each perspective to a subagent and run them in parallel.
+Target: $(git diff main...HEAD)"

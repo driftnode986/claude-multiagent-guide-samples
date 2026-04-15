@@ -1,37 +1,37 @@
-# Ch02: 5つのパターン＋動くサンプル
+# Ch02: Five Workflow Patterns
 
-書籍「Claude Code マルチエージェント実践ガイド」第2章のサンプルコードです。
+Companion code for Chapter 2 of *Multi-Agent Development with Claude Code*.
 
-## ファイル一覧
+## Files
 
-| ファイル | 種類 | 説明 |
-|---------|------|------|
-| `prompt-chain.sh` | Shell | プロンプトチェーンパターン: ゲート付き逐次実行 |
-| `routing.sh` | Shell | ルーティングパターン: タスク分類によるモデル使い分け |
-| `parallel-review.sh` | Shell | 並列化パターン: コードレビューを3観点で並列実行 |
-| `eval-optimize-loop.sh` | Shell | 評価・最適化パターン: 反復改善ループ |
+| File | Type | Description |
+|------|------|-------------|
+| `prompt-chain.sh` | Shell | Prompt chaining pattern: sequential execution with gates |
+| `routing.sh` | Shell | Routing pattern: model selection based on task classification |
+| `parallel-review.sh` | Shell | Parallelization pattern: code review across three perspectives |
+| `eval-optimize-loop.sh` | Shell | Evaluator-optimizer pattern: iterative improvement loop |
 
-## 使い方
+## Usage
 
-各スクリプトは独立して実行できます。プロジェクトのルートディレクトリで実行してください。
+Each script runs independently. Execute from the project root directory.
 
 ```bash
-# プロンプトチェーン（型チェック→テスト追加）
+# Prompt chaining (type check -> add tests)
 bash prompt-chain.sh
 
-# ルーティング（USER_QUERY変数を設定して実行）
-USER_QUERY="認証の仕組みを教えて" bash routing.sh
+# Routing (set the USER_QUERY variable before running)
+USER_QUERY="Explain how authentication works" bash routing.sh
 
-# 並列レビュー（mainブランチとの差分をレビュー）
+# Parallel review (reviews the diff between main and HEAD)
 bash parallel-review.sh
 
-# 評価・最適化ループ（最大3回の改善サイクル）
+# Evaluator-optimizer loop (up to 3 improvement cycles)
 bash eval-optimize-loop.sh
 ```
 
-## 前提条件
+## Prerequisites
 
-- Claude Code CLI（最新版）
-- Node.js / npm（prompt-chain.sh で `npx tsc` と `npm test` を使用）
-- jq（routing.sh, eval-optimize-loop.sh で JSON パース）
-- Git（parallel-review.sh で `git diff` を使用）
+- Claude Code CLI (latest version)
+- Node.js / npm (`prompt-chain.sh` uses `npx tsc` and `npm test`)
+- jq (`routing.sh`, `eval-optimize-loop.sh` use it for JSON parsing)
+- Git (`parallel-review.sh` uses `git diff`)

@@ -5,4 +5,4 @@ model: sonnet
 tools: Read, Grep, Glob
 ---
 
-本文がシステムプロンプトになります。
+The body text becomes the subagent's system prompt.

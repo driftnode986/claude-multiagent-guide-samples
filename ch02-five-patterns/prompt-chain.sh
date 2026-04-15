@@ -1,19 +1,19 @@
 #!/bin/bash
-# 書籍「Claude Code マルチエージェント実践ガイド」第2章
-# ステップ1: コード変更の生成
-claude -p "src/auth.tsの認証ロジックをJWT方式に変更してください" \
+# Multi-Agent Development with Claude Code -- Chapter 2
+# Step 1: Generate the code change
+claude -p "Refactor the authentication logic in src/auth.ts to use JWT" \
   --output-format json > step1_result.json
 
-# ゲート: 型チェック
+# Gate: type check
 npx tsc --noEmit
 if [ $? -ne 0 ]; then
-  echo "型エラーが発生。ステップ1をやり直します"
+  echo "Type errors detected. Retrying step 1."
   exit 1
 fi
 
-# ステップ2: テストの追加
-claude -p "src/auth.tsの変更に対するテストを追加してください" \
+# Step 2: Add tests for the change
+claude -p "Add tests for the changes made to src/auth.ts" \
   --output-format json > step2_result.json
 
-# ゲート: テスト実行
+# Gate: run tests
 npm test

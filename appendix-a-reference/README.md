@@ -1,29 +1,29 @@
-# Appendix A: コマンド・設定リファレンス
+# Appendix A: Quick Reference Templates
 
-書籍「Claude Code マルチエージェント実践ガイド」Appendix A のサンプルコードです。
+Companion files for Appendix A of *Multi-Agent Development with Claude Code*.
 
-## ファイル一覧
+## Files
 
-| ファイル | 種類 | 説明 |
-|---------|------|------|
-| `agent-definition-template.md` | サブエージェント定義 | YAMLフロントマター + Markdown本文のテンプレート |
-| `agent-tool-params.json` | JSON | `Agent` ツールのパラメータリファレンス |
-| `mcp-inline-template.yml` | YAML | MCPサーバーのインライン定義テンプレート |
+| File | Type | Description |
+|------|------|-------------|
+| `agent-definition-template.md` | Subagent definition | YAML frontmatter + Markdown body template |
+| `agent-tool-params.json` | JSON | Parameter reference for the `Agent` tool |
+| `mcp-inline-template.yml` | YAML | Inline MCP server definition template |
 
-## 使い方
+## Usage
 
-### サブエージェント定義の作成
+### Creating a Subagent Definition
 
-`agent-definition-template.md` をコピーして `.claude/agents/` に配置し、`name`、`description`、`model`、`tools` を書き換えてください。
+Copy `agent-definition-template.md` into `.claude/agents/` in your project. Replace the `name`, `description`, `model`, and `tools` fields with your own values. The Markdown body becomes the subagent's system prompt.
 
-### Agent ツールのパラメータ
+### Agent Tool Parameters
 
-`agent-tool-params.json` は Claude Code 内部でサブエージェントを起動する際のパラメータ構造です。`prompt` フィールドが最重要で、サブエージェントへの詳細な指示を記述します。
+`agent-tool-params.json` shows the parameter structure used when Claude Code spawns a subagent internally. The `prompt` field is the most important -- it contains the detailed instructions for the subagent.
 
-### MCP インライン定義
+### MCP Inline Definition
 
-`mcp-inline-template.yml` はサブエージェント定義内でMCPサーバーをインライン定義する際のテンプレートです。`${API_KEY}` のような環境変数参照が使えます。
+`mcp-inline-template.yml` is a template for defining MCP servers inline within a subagent definition. Use `${API_KEY}` syntax for environment variable references.
 
-## 前提条件
+## Prerequisites
 
-- Claude Code CLI（最新版）
+- Claude Code CLI (latest version)
