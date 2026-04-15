@@ -1,41 +1,41 @@
-# Ch14: 本番信頼性
+# Ch14: Production Reliability
 
-書籍「Claude Code マルチエージェント実践ガイド」第14章の解説とサンプルコードです。
+Sample code and reference material for Chapter 14 of *Multi-Agent Development with Claude Code*.
 
-## 概要
+## Overview
 
-本章は運用パターンとチェックリストが中心ですが、もっとも実装に踏み込めるトピックである「コスト閾値アラート」について最小実装を提供しています。
+This chapter focuses on operational patterns and checklists. The companion code provides a minimal implementation of cost threshold alerting -- the topic most amenable to concrete code.
 
-## ファイル一覧
+## Files
 
-| ファイル | 役割 |
-|---------|------|
-| `cost_alert.py` | JSONL ログを集計し、累積コスト・最大ターン数の閾値超過を検出する |
-| `record_turn.sh` | 1ターン分のイベントを `cost-log.jsonl` に追記するシェルヘルパー |
-| `sample-events.jsonl` | 動作確認用のサンプルログ（4イベント / 2セッション） |
+| File | Description |
+|------|-------------|
+| `cost_alert.py` | Aggregates JSONL logs and detects cumulative cost or max-turn threshold breaches |
+| `record_turn.sh` | Shell helper that appends one turn event to `cost-log.jsonl` |
+| `sample-events.jsonl` | Sample log for testing (4 events across 2 sessions) |
 
-## クイックスタート
+## Quick Start
 
 ```bash
-# サンプルログに対して閾値判定を実行 (10 USD / 50 turns)
+# Run threshold check against the sample log (10 USD / 50 turns)
 python cost_alert.py --log sample-events.jsonl --max-usd 10 --max-turns 50
 
-# 期待される出力 (stderr)
+# Expected output (stderr)
 # [OK] sessions=2 total=$0.57 max_turns=3
 ```
 
-閾値超過のシミュレーションは以下のように行います。
+To simulate a threshold breach:
 
 ```bash
-# わずかな閾値で実行するとアラートに切り替わる
+# Use a low threshold to trigger the alert
 python cost_alert.py --log sample-events.jsonl --max-usd 0.1 --max-turns 50
 # [ALERT] USD>0.10 | sessions=2 total=$0.57 max_turns=3
 # (exit 1)
 ```
 
-不正なモデル名や壊れた JSON が混入していた場合は exit 2 で `[ERROR]` を返します。ログ書き込み側のバグを早期検出できるよう、アラートと区別された終了コードにしています。
+Invalid model names or malformed JSON produce exit code 2 with `[ERROR]`, distinct from the alert exit code, to catch logging bugs early.
 
-新しいターンを追記するには `record_turn.sh` を使います。
+To append new turn events, use `record_turn.sh`:
 
 ```bash
 # usage: ./record_turn.sh <session> <turn> <model> <in_tokens> <out_tokens>
@@ -44,41 +44,41 @@ COST_LOG=cost-log.jsonl ./record_turn.sh s1 2 opus 15000 4200
 python cost_alert.py --log cost-log.jsonl --max-usd 10 --max-turns 50
 ```
 
-## ハーネスへの組み込み方
+## Integrating with a Harness
 
-書籍 Ch9 で構築したハーネスや任意のスクリプトから、ツール呼び出しごとに `record_turn.sh` を呼び出してログを溜めます。1セッションの終わりに `cost_alert.py` を実行し、終了コードが非ゼロなら新規セッションの開始を抑止します。
+Call `record_turn.sh` after each tool call in the harness from Chapter 9 (or any custom script). At the end of each session, run `cost_alert.py` and halt new sessions if the exit code is non-zero.
 
 ```bash
-# セッション終了時のフック例
+# Example session-end hook
 if ! python cost_alert.py --log cost-log.jsonl --max-usd 10 --max-turns 50; then
-  echo "コスト閾値を超過しました。原因を調査してください。"
+  echo "Cost threshold exceeded. Investigate before continuing."
   exit 1
 fi
 ```
 
-## 価格表の保守
+## Pricing Table Maintenance
 
-`cost_alert.py` 冒頭の `PRICING` 辞書は Anthropic Standard tier の参考価格 (例示用) です。本番投入前に <https://www.anthropic.com/pricing> で最新値を確認して上書きしてください。新モデルや価格改定があっても、修正箇所は辞書1箇所だけで済みます。
+The `PRICING` dictionary at the top of `cost_alert.py` contains reference prices for Anthropic's Standard tier (for illustration only). Before production use, verify the latest prices at https://www.anthropic.com/pricing and update the dictionary. When new models or pricing changes arrive, only this one dictionary needs updating.
 
-## 主なトピック（書籍本文）
+## Key Topics (Book Text)
 
-| トピック | 内容 |
-|---------|------|
-| チェックポイント戦略 | 定期・エラー時のチェックポイントによる回復設計 |
-| トレースログ構造 | セッション単位のステップ記録（ツール呼び出し・トークン・所要時間） |
-| モデル階層化 | リード（Opus）・ワーカー（Sonnet）・検証（Haiku）のコスト最適配置 |
-| パーミッション階層 | 開発・CI/CD・本番環境ごとのパーミッション設計 |
-| レインボーデプロイメント | 複数バージョンの同時実行と段階的トラフィック移行 |
-| インシデント対応 | 無限ループ・コスト暴走・品質劣化・カスケード障害の検知と対処フロー |
+| Topic | Content |
+|-------|---------|
+| Checkpoint strategy | Recovery design through periodic and error-triggered checkpoints |
+| Trace log structure | Per-session step recording (tool calls, tokens, duration) |
+| Model tiering | Cost-optimal placement: lead (Opus), worker (Sonnet), validator (Haiku) |
+| Permission hierarchy | Permission design for development, CI/CD, and production environments |
+| Rainbow deployments | Running multiple versions simultaneously with gradual traffic shifting |
+| Incident response | Detection and response flows for infinite loops, cost runaway, quality degradation, and cascade failures |
 
-## 参考
+## References
 
-- Anthropic Engineering Blog「How we built our multi-agent research system」（2025-06）
-- Anthropic Engineering Blog「Building a C compiler with a team of parallel Claudes」（2026-02）
-- Anthropic 価格ページ <https://www.anthropic.com/pricing>
+- Anthropic Engineering Blog, "How we built our multi-agent research system" (2025-06)
+- Anthropic Engineering Blog, "Building a C compiler with a team of parallel Claudes" (2026-02)
+- Anthropic pricing page: https://www.anthropic.com/pricing
 
-## 前提条件
+## Prerequisites
 
-- Python 3.9 以上
-- Bash 4 以上（`record_turn.sh` の利用時）
-- Claude Code CLI（最新版）
+- Python 3.9 or later
+- Bash 4 or later (for `record_turn.sh`)
+- Claude Code CLI (latest version)

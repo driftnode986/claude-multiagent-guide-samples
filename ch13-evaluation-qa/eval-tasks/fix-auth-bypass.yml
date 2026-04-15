@@ -1,6 +1,6 @@
 task:
   id: "fix-auth-bypass_1"
-  desc: "パスワードフィールドが空の場合の認証バイパスを修正する"
+  desc: "Fix the authentication bypass when the password field is empty"
   graders:
     - type: deterministic_tests
       required:

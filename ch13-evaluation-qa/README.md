@@ -1,37 +1,37 @@
-# Ch13: 評価・品質保証
+# Ch13: Evaluating Agent Performance
 
-書籍「Claude Code マルチエージェント実践ガイド」第13章のサンプルコードです。
+Sample code for Chapter 13 of *Multi-Agent Development with Claude Code*.
 
-## ファイル一覧
+## Files
 
-| ファイル | 種類 | 説明 |
-|---------|------|------|
-| `eval-tasks/fix-auth-bypass.yml` | YAML | 認証バイパス修正タスクの評価定義（pass/fail基準付き） |
-| `eval-tasks/auth.py` | Python | テスト対象コード（空パスワードのバイパスバグあり） |
-| `eval-tasks/test_empty_pw_rejected.py` | Python | 空パスワード拒否を検証するグレーダー |
-| `eval-tasks/test_null_pw_rejected.py` | Python | Nullパスワード拒否を検証するグレーダー |
-| `agents/eval-runner.md` | サブエージェント定義 | 評価タスクを実行し結果を記録するエージェント |
-| `settings-regression-hooks.json` | JSON | リグレッション検出 Hooks の `settings.json` 設定 |
+| File | Type | Description |
+|------|------|-------------|
+| `eval-tasks/fix-auth-bypass.yml` | YAML | Evaluation task definition for an auth bypass fix (with pass/fail criteria) |
+| `eval-tasks/auth.py` | Python | Code under test (contains an empty-password bypass bug) |
+| `eval-tasks/test_empty_pw_rejected.py` | Python | Grader that verifies empty passwords are rejected |
+| `eval-tasks/test_null_pw_rejected.py` | Python | Grader that verifies null passwords are rejected |
+| `agents/eval-runner.md` | Subagent definition | Agent that executes evaluation tasks and records results |
+| `settings-regression-hooks.json` | JSON | `settings.json` config for regression detection hooks |
 
-## 使い方
+## Usage
 
-### 評価タスクの定義
+### Defining Evaluation Tasks
 
-`eval-tasks/fix-auth-bypass.yml` を参考に、プロジェクト固有の評価タスクを作成してください。各タスクには以下を含めます:
+Use `eval-tasks/fix-auth-bypass.yml` as a template to create project-specific evaluation tasks. Each task includes:
 
-- `id`: 一意の識別子
-- `desc`: 曖昧さのないタスク説明
-- `graders`: 決定的テストや状態チェックによる合否判定
+- `id`: a unique identifier
+- `desc`: an unambiguous task description
+- `graders`: pass/fail criteria using deterministic tests or state checks
 
-### 評価の実行
+### Running Evaluations
 
-`agents/eval-runner.md` を `.claude/agents/` に配置し、サブエージェントとして呼び出します。
+Place `agents/eval-runner.md` in `.claude/agents/` and invoke it as a subagent.
 
-### リグレッション検出
+### Regression Detection
 
-`settings-regression-hooks.json` の内容を `.claude/settings.json` にマージすると、ファイル書き込み・編集の前にリグレッションスイートが実行されます。`scripts/run-regression-suite.sh` は別途プロジェクトに合わせて作成してください。
+Merge `settings-regression-hooks.json` into your `.claude/settings.json` to run the regression suite before every file write or edit. Create `scripts/run-regression-suite.sh` tailored to your project.
 
-## 前提条件
+## Prerequisites
 
-- Claude Code CLI（最新版）
-- プロジェクト固有のテストスイート
+- Claude Code CLI (latest version)
+- A project-specific test suite
