@@ -1,23 +1,23 @@
 # CLAUDE.md
 
-## マルチエージェント方針
+## Multi-Agent Policy
 
-### サブエージェントへの委譲基準
-- 1ファイルの変更: 自分で処理
-- 2-5ファイル: 1個のサブエージェント
-- 6ファイル以上: 複数のサブエージェントを並列実行
+### Delegation Criteria
+- 1 file change: handle yourself
+- 2-5 files: 1 subagent
+- 6+ files: multiple subagents in parallel
 
-### 委譲時の必須情報
-1. 具体的な目的（1-2文）
-2. 出力形式（JSON/Markdown/箇条書き）
-3. 使用すべきツール
-4. スコープ外の作業
+### Required Information When Delegating
+1. Concrete goal (1-2 sentences)
+2. Output format (JSON / Markdown / bullet list)
+3. Which tools to use
+4. Work that is out of scope
 
-### 検索戦略
-- 広い検索から始め、結果に基づいて絞り込む
-- Globでファイル構造を把握 → Grepで具体的なコード検索
+### Search Strategy
+- Start with a broad search, then narrow based on results
+- Glob to understand file structure → Grep for specific code search
 
-### 品質基準
-- サブエージェントの結果は必ず検証する
-- "問題なし"の報告は別の観点で確認する
-- 不確実な情報を事実として報告しない
+### Quality Standards
+- Always verify subagent results
+- Double-check "no issues found" reports from a different angle
+- Never report uncertain information as fact

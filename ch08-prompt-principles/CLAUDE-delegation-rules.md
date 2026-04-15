@@ -1,14 +1,14 @@
-## サブエージェントへの委譲ルール
+## Delegation Rules for Subagents
 
-サブエージェントに委譲する際は、以下のテンプレートに従ってください:
+When delegating to subagents, follow this template:
 
-### 必須情報
-1. **目的**: 1-2文で具体的に（例: "認証モジュールのSQLインジェクション脆弱性を検査する"）
-2. **出力形式**: 結果の構造（例: "JSON形式で、脆弱性の種類・ファイル・行番号・深刻度を含める"）
-3. **ツール指針**: 使用すべきツールとリソース（例: "Grepでソースコードを検索し、Readで該当ファイルを確認する"）
-4. **境界**: 対象外のスコープ（例: "修正は行わない。検出と報告のみ"）
+### Required Information
+1. **Goal**: State concretely in 1-2 sentences (e.g., "Scan the auth module for SQL injection vulnerabilities")
+2. **Output format**: Structure of the result (e.g., "JSON with vulnerability type, file, line number, and severity")
+3. **Tool guidance**: Which tools and resources to use (e.g., "Search source code with Grep, then verify files with Read")
+4. **Boundaries**: What is out of scope (e.g., "Detection and reporting only — do not apply fixes")
 
-### 禁止
-- "〜について調査して" のような曖昧な指示
-- コンテキストなしのファイルパス列挙
-- 出力形式を指定しない委譲
+### Prohibited
+- Vague instructions like "investigate this"
+- Listing file paths without context
+- Delegating without specifying the output format

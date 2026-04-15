@@ -1,31 +1,31 @@
-# Ch08: エージェントプロンプトの8原則
+# Ch08: Eight Principles of Agent Prompts
 
-書籍「Claude Code マルチエージェント実践ガイド」第8章のサンプルコードです。
+Sample code for Chapter 8 of *Multi-Agent Development with Claude Code*.
 
-## ファイル一覧
+## Files
 
-| ファイル | 種類 | 説明 |
-|---------|------|------|
-| `agents/debug-researcher.md` | サブエージェント | 調査結果と推論過程を詳細に報告するデバッグ用エージェント（原則1） |
-| `agents/task-coordinator.md` | サブエージェント | タスクの複雑さに応じてリソースを配分するコーディネーター（原則3） |
-| `agents/prompt-improver.md` | サブエージェント | サブエージェントのプロンプトを分析・改善する（原則5） |
-| `agents/methodical-researcher.md` | サブエージェント | 計画を立ててから体系的に調査する（原則7） |
-| `agents/code-reviewer.md` | サブエージェント | 8原則を適用したコードレビューエージェント |
-| `CLAUDE-multiagent-policy.md` | CLAUDE.mdテンプレート | プロジェクトレベルのマルチエージェント方針 |
-| `CLAUDE-delegation-rules.md` | CLAUDE.mdテンプレート | サブエージェントへの委譲ルールテンプレート |
+| File | Type | Description |
+|------|------|-------------|
+| `agents/debug-researcher.md` | Subagent | Debug agent that reports findings and reasoning in detail (Principle 1) |
+| `agents/task-coordinator.md` | Subagent | Coordinator that allocates resources based on task complexity (Principle 3) |
+| `agents/prompt-improver.md` | Subagent | Analyzes and improves subagent prompts (Principle 5) |
+| `agents/methodical-researcher.md` | Subagent | Plans before investigating, then researches systematically (Principle 7) |
+| `agents/code-reviewer.md` | Subagent | Code review agent applying all 8 principles |
+| `CLAUDE-multiagent-policy.md` | CLAUDE.md template | Project-level multi-agent policy |
+| `CLAUDE-delegation-rules.md` | CLAUDE.md template | Delegation rules template for subagents |
 
-## 使い方
+## Usage
 
-サブエージェント定義ファイルは `.claude/agents/` ディレクトリに配置して使用します。
+Place subagent definition files in the `.claude/agents/` directory:
 
 ```bash
-# サブエージェント定義を配置
+# Copy subagent definitions
 cp agents/*.md .claude/agents/
 
-# CLAUDE.mdテンプレートの内容をプロジェクトのCLAUDE.mdに追記
+# Append the CLAUDE.md template to your project's CLAUDE.md
 cat CLAUDE-multiagent-policy.md >> CLAUDE.md
 ```
 
-## 前提条件
+## Prerequisites
 
-- Claude Code CLI（最新版）
+- Claude Code CLI (latest)
