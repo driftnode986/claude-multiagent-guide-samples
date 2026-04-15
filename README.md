@@ -1,69 +1,69 @@
-# Multi-Agent Development with Claude Code -- Companion Code
+# Claude Codeマルチエージェント実践ガイド — サンプルコード
 
-Sample code repository for the book *Multi-Agent Development with Claude Code*.
+書籍「Claude Codeマルチエージェント実践ガイド」のサンプルコードリポジトリです。
 
-## Structure
+## ディレクトリ構成
 
-| Directory | Chapter | Contents | Files |
-|-----------|---------|----------|-------|
-| `ch01-why-multiagent/` | Ch1 | The Case for Multi-Agent Systems | 2 |
-| `ch02-five-patterns/` | Ch2 | Five Workflow Patterns | 4 |
-| `ch03-subagent-basics/` | Ch3 | How Subagents Work | 5 |
-| `ch04-custom-subagent/` | Ch4 | Building Custom Subagents | 5 |
-| `ch05-subagent-mcp/` | Ch5 | Connecting Subagents to External Tools via MCP | 4 |
-| `ch06-orchestrator-design/` | Ch6 | Orchestrator Design | 2 |
-| `ch07-tool-design-aci/` | Ch7 | Designing Tools for Agents | 6 |
-| `ch08-prompt-principles/` | Ch8 | Writing Effective Agent Prompts | 7 |
-| `ch09-long-running-agent/` | Ch9 | Managing Long-Running Agent Sessions | 7 |
-| `ch10-error-recovery/` | Ch10 | Error Recovery and Failure Modes | 8 |
-| `ch11-agent-team-concept/` | Ch11 | Getting Started with Agent Teams | 2 |
-| `ch12-parallel-development/` | Ch12 | Agent Teams in Practice | 4 |
-| `ch13-evaluation-qa/` | Ch13 | Evaluating Agent Performance | 3 |
-| `ch14-production-reliability/` | Ch14 | Production Reliability | 3 |
-| `appendix-a-reference/` | App A | Quick Reference Templates | 3 |
+| ディレクトリ | 章 | 内容 | ファイル数 |
+|-------------|-----|------|-----------|
+| `ch01-why-multiagent/` | 第1章 | マルチエージェントが必要な理由 | 2 |
+| `ch02-five-patterns/` | 第2章 | 5つのワークフローパターン | 4 |
+| `ch03-subagent-basics/` | 第3章 | サブエージェントの仕組み | 5 |
+| `ch04-custom-subagent/` | 第4章 | カスタムサブエージェントの構築 | 5 |
+| `ch05-subagent-mcp/` | 第5章 | MCPでサブエージェントを外部ツールと接続する | 4 |
+| `ch06-orchestrator-design/` | 第6章 | オーケストレーターの設計 | 2 |
+| `ch07-tool-design-aci/` | 第7章 | エージェント向けツールの設計 | 6 |
+| `ch08-prompt-principles/` | 第8章 | 効果的なエージェントプロンプトの書き方 | 7 |
+| `ch09-long-running-agent/` | 第9章 | 長時間エージェントセッションの管理 | 7 |
+| `ch10-error-recovery/` | 第10章 | エラーリカバリーと障害モード | 8 |
+| `ch11-agent-team-concept/` | 第11章 | エージェントチームの始め方 | 2 |
+| `ch12-parallel-development/` | 第12章 | エージェントチームの実践 | 4 |
+| `ch13-evaluation-qa/` | 第13章 | エージェントのパフォーマンス評価 | 3 |
+| `ch14-production-reliability/` | 第14章 | 本番環境での信頼性 | 3 |
+| `appendix-a-reference/` | 付録A | クイックリファレンス | 3 |
 
-## File Types
+## ファイル種別
 
-| Extension | Location | Description |
-|-----------|----------|-------------|
-| `agents/*.md` | Per chapter | Custom subagent definitions (place in `.claude/agents/` to use) |
-| `*.sh` | Per chapter | Shell scripts (harnesses, hooks, validation) |
-| `schemas/*.json` | Ch7 | Tool definition JSON schemas |
-| `*.json` | Per chapter | Claude Code configuration files (`settings.json`, etc.) |
-| `*.yml` | Per chapter | Strategy and task definitions |
-| `CLAUDE-*.md` | Per chapter | `CLAUDE.md` templates (place in project root to use) |
+| 拡張子 | 場所 | 説明 |
+|--------|------|------|
+| `agents/*.md` | 各章 | カスタムサブエージェント定義（使用するには `.claude/agents/` に配置） |
+| `*.sh` | 各章 | シェルスクリプト（ハーネス、フック、バリデーション） |
+| `schemas/*.json` | 第7章 | ツール定義JSONスキーマ |
+| `*.json` | 各章 | Claude Code設定ファイル（`settings.json` など） |
+| `*.yml` | 各章 | 戦略・タスク定義ファイル |
+| `CLAUDE-*.md` | 各章 | `CLAUDE.md` テンプレート（プロジェクトルートに配置して使用） |
 
-## Quick Start
+## クイックスタート
 
 ```bash
 git clone https://github.com/driftnode986/claude-multiagent-guide-samples.git
 cd claude-multiagent-guide-samples
 ```
 
-### Using a Subagent
+### サブエージェントを使う
 
 ```bash
-# Example: copy the test writer from Ch4 into your project
+# 例: 第4章のテストライターをプロジェクトにコピーする
 cp ch04-custom-subagent/agents/test-writer.md your-project/.claude/agents/
 ```
 
-### Enabling Agent Teams
+### エージェントチームを有効にする
 
 ```bash
-# Review the Ch11 settings and update your own settings.json
+# 第11章の設定を確認して、自分の settings.json に反映する
 cat ch11-agent-team-concept/settings-agent-teams.json
 ```
 
-## Requirements
+## 動作要件
 
-- Claude Code CLI (latest version)
+- Claude Code CLI（最新版）
 - macOS / Linux
 
-## Usage
+## 使い方
 
-See the `README.md` in each directory for chapter-specific instructions.
+各ディレクトリの `README.md` に章ごとの詳細な手順が記載されています。
 
-## Book Information
+## 書籍情報
 
-- **Title**: Multi-Agent Development with Claude Code
-- **Author**: Makoto Makino
+- **タイトル**: Claude Codeマルチエージェント実践ガイド
+- **著者**: 牧野 誠

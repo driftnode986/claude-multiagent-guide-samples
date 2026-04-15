@@ -1,31 +1,31 @@
-# Ch12: Agent Teams in Practice
+# 第12章: エージェントチームの実践
 
-Sample code for Chapter 12 of *Multi-Agent Development with Claude Code*.
+「Claude Codeマルチエージェント実践ガイド」第12章のサンプルコードです。
 
-## Files
+## ファイル
 
-| File | Type | Description |
-|------|------|-------------|
-| `claude-json-teammate-mode.json` | JSON | Teammate display mode setting for `~/.claude.json` |
-| `settings-teammate-idle.json` | JSON | `settings.json` config for TeammateIdle hooks |
-| `hooks/check-teammate-idle.sh` | Shell | Quality gate that runs tests when a teammate goes idle |
-| `hooks/check-task-completed.sh` | Shell | Quality gate that checks lint and tests on task completion |
+| ファイル | 種別 | 説明 |
+|---------|------|------|
+| `claude-json-teammate-mode.json` | JSON | `~/.claude.json` 用のチームメンバー表示モード設定 |
+| `settings-teammate-idle.json` | JSON | TeammateIdle フック用の `settings.json` 設定 |
+| `hooks/check-teammate-idle.sh` | シェル | チームメンバーがアイドルになったときにテストを実行する品質ゲート |
+| `hooks/check-task-completed.sh` | シェル | タスク完了時にリントとテストをチェックする品質ゲート |
 
-## Usage
+## 使い方
 
-### Display Mode Configuration
+### 表示モードの設定
 
-Merge the contents of `claude-json-teammate-mode.json` into `~/.claude.json`. Options are `"auto"` (default), `"in-process"`, or `"split-pane"`.
+`claude-json-teammate-mode.json` の内容を `~/.claude.json` にマージします。オプションは `"auto"`（デフォルト）、`"in-process"`、`"split-pane"` のいずれかです。
 
-### Quality Gates via Hooks
+### フックによる品質ゲートの設定
 
-1. Merge `settings-teammate-idle.json` into your project's `.claude/settings.json`
-2. Copy the scripts under `hooks/` to `.claude/hooks/`
-3. Grant execute permissions: `chmod +x .claude/hooks/*.sh`
+1. `settings-teammate-idle.json` をプロジェクトの `.claude/settings.json` にマージする
+2. `hooks/` 以下のスクリプトを `.claude/hooks/` にコピーする
+3. 実行権限を付与する: `chmod +x .claude/hooks/*.sh`
 
-Hooks return exit code `2` to send feedback and instruct the teammate to continue working.
+フックは終了コード `2` を返すことで、チームメンバーにフィードバックを送り作業継続を指示します。
 
-## Prerequisites
+## 動作要件
 
-- Claude Code CLI (latest version)
-- A Node.js project with working `npm test` / `npm run lint`
+- Claude Code CLI（最新版）
+- `npm test` / `npm run lint` が動作するNode.jsプロジェクト

@@ -1,27 +1,27 @@
-# Ch01: The Case for Multi-Agent Systems
+# 第1章: マルチエージェントが必要な理由
 
-Companion code for Chapter 1 of *Multi-Agent Development with Claude Code*.
+「Claude Codeマルチエージェント実践ガイド」第1章のサンプルコードです。
 
-## Files
+## ファイル
 
-| File | Type | Description |
-|------|------|-------------|
-| `agent-harness.sh` | Shell | Agent harness from the C compiler project (infinite loop execution) |
-| `AGENT_PROMPT.md` | Markdown | Agent instruction prompt (loaded by `agent-harness.sh`) |
+| ファイル | 種別 | 説明 |
+|---------|------|------|
+| `agent-harness.sh` | シェル | CコンパイラプロジェクトのAgentハーネス（無限ループ実行） |
+| `AGENT_PROMPT.md` | Markdown | エージェント指示プロンプト（`agent-harness.sh` が読み込む） |
 
-## Usage
+## 使い方
 
-`agent-harness.sh` demonstrates the harness structure used in Anthropic's C compiler project. Each agent runs in an infinite loop inside a Docker container, autonomously selecting and executing tasks.
+`agent-harness.sh` は、AnthropicのCコンパイラプロジェクトで使われたハーネス構造を示します。各エージェントはDockerコンテナ内で無限ループとして動作し、タスクを自律的に選択・実行します。
 
 ```bash
-# Ensure AGENT_PROMPT.md is in the same directory
+# AGENT_PROMPT.md が同じディレクトリにあることを確認してから実行
 bash agent-harness.sh
 ```
 
-> **Warning**: This script uses `--dangerously-skip-permissions`. Exercise caution when running in production environments.
+> **警告**: このスクリプトは `--dangerously-skip-permissions` を使用します。本番環境での実行には十分注意してください。
 
-## Prerequisites
+## 動作要件
 
-- Claude Code CLI (latest version)
+- Claude Code CLI（最新版）
 - Git
-- Docker (for production use)
+- Docker（本番環境で使用する場合）

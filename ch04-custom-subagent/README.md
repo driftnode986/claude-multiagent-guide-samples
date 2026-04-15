@@ -1,33 +1,33 @@
-# Ch04: Building Custom Subagents
+# 第4章: カスタムサブエージェントの構築
 
-Sample code for Chapter 4 of *Multi-Agent Development with Claude Code*.
+「Claude Codeマルチエージェント実践ガイド」第4章のサンプルコードです。
 
-## Files
+## ファイル
 
-| File | Type | Description |
-|------|------|-------------|
-| `agents/code-reviewer.md` | Subagent definition | Basic code review agent |
-| `agents/test-writer.md` | Subagent definition | Automated test generation agent |
-| `agents/security-auditor.md` | Subagent definition | OWASP Top 10 security audit agent |
-| `agents/project-expert.md` | Subagent definition | Project knowledge agent with persistent memory |
-| `scripts/validate-readonly-query.sh` | Shell | PreToolUse hook: blocks SQL write operations |
+| ファイル | 種別 | 説明 |
+|---------|------|------|
+| `agents/code-reviewer.md` | サブエージェント定義 | 基本的なコードレビューエージェント |
+| `agents/test-writer.md` | サブエージェント定義 | 自動テスト生成エージェント |
+| `agents/security-auditor.md` | サブエージェント定義 | OWASPトップ10に基づくセキュリティ監査エージェント |
+| `agents/project-expert.md` | サブエージェント定義 | 永続メモリを持つプロジェクト知識エージェント |
+| `scripts/validate-readonly-query.sh` | シェル | PreToolUseフック: SQLの書き込み操作をブロックする |
 
-## Usage
+## 使い方
 
-### Installing Subagent Definitions
+### サブエージェント定義のインストール
 
-Copy the files from `agents/` into your project's `.claude/agents/` directory:
+`agents/` 内のファイルをプロジェクトの `.claude/agents/` ディレクトリにコピーします。
 
 ```bash
 mkdir -p .claude/agents
 cp agents/*.md .claude/agents/
 ```
 
-Claude Code automatically discovers and selects subagents based on task context.
+Claude Codeはタスクの文脈に基づいてサブエージェントを自動的に検出・選択します。
 
-### Installing the Validation Script
+### バリデーションスクリプトのインストール
 
-`scripts/validate-readonly-query.sh` is used as a PreToolUse hook for the `db-reader` subagent:
+`scripts/validate-readonly-query.sh` は `db-reader` サブエージェントのPreToolUseフックとして使用します。
 
 ```bash
 mkdir -p scripts
@@ -35,7 +35,7 @@ cp scripts/validate-readonly-query.sh scripts/
 chmod +x scripts/validate-readonly-query.sh
 ```
 
-## Prerequisites
+## 動作要件
 
-- Claude Code CLI (latest version)
-- jq (used by the validation script)
+- Claude Code CLI（最新版）
+- jq（バリデーションスクリプトが使用）

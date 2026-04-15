@@ -1,38 +1,38 @@
-# Ch10: Error Recovery and Failure Mode Classification
+# 第10章: エラーリカバリーと障害モードの分類
 
-Sample code for Chapter 10 of *Multi-Agent Development with Claude Code*.
+「Claude Codeマルチエージェント実践ガイド」第10章のサンプルコードです。
 
-## File Listing
+## ファイル一覧
 
-| File | Type | Description |
-|------|------|-------------|
-| `recovery-strategies.yml` | YAML | Four failure mode categories with recovery strategies |
-| `agents/risky-refactor.md` | subagent | Execute risky refactoring in an isolated worktree |
-| `agents/resilient-worker.md` | subagent | Error-resilient worker agent (with hooks) |
-| `agents/careful-worker.md` | subagent | Human-in-the-loop agent that stops when uncertain |
-| `graceful-degradation.yml` | YAML | Four levels of graceful degradation |
-| `CLAUDE-degrade-rules.md` | CLAUDE.md template | Graceful degradation rules |
-| `failure-log-template.md` | template | Failure log template |
-| `agent-memory-template.md` | template | Subagent persistent memory MEMORY.md template |
+| ファイル | 種別 | 説明 |
+|---------|------|------|
+| `recovery-strategies.yml` | YAML | 4つの障害モードカテゴリとリカバリー戦略 |
+| `agents/risky-refactor.md` | サブエージェント | 分離されたワークツリーでリスクの高いリファクタリングを実行する |
+| `agents/resilient-worker.md` | サブエージェント | エラー耐性を持つワーカーエージェント（フック付き） |
+| `agents/careful-worker.md` | サブエージェント | 不確かな場合に停止するヒューマンインザループエージェント |
+| `graceful-degradation.yml` | YAML | 4段階のグレースフルデグラデーション |
+| `CLAUDE-degrade-rules.md` | CLAUDE.md テンプレート | グレースフルデグラデーションルール |
+| `failure-log-template.md` | テンプレート | 障害ログテンプレート |
+| `agent-memory-template.md` | テンプレート | サブエージェントの永続メモリ MEMORY.md テンプレート |
 
-## Usage
+## 使い方
 
 ```bash
-# Place subagent definitions
+# サブエージェント定義を配置する
 cp agents/*.md .claude/agents/
 
-# Append graceful degradation rules to CLAUDE.md
+# グレースフルデグラデーションルールを CLAUDE.md に追記する
 cat CLAUDE-degrade-rules.md >> CLAUDE.md
 
-# Use the failure log template
+# 障害ログテンプレートを使用する
 cp failure-log-template.md docs/failure-log.md
 
-# Place persistent memory template for a subagent
+# サブエージェント用の永続メモリテンプレートを配置する
 mkdir -p .claude/agent-memory/careful-worker/
 cp agent-memory-template.md .claude/agent-memory/careful-worker/MEMORY.md
 ```
 
-## Prerequisites
+## 動作要件
 
-- Claude Code CLI (latest version)
-- Git (for checkpointing and reverts)
+- Claude Code CLI（最新版）
+- Git（チェックポイントと巻き戻しに使用）

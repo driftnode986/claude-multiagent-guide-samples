@@ -1,37 +1,37 @@
-# Ch02: Five Workflow Patterns
+# 第2章: 5つのワークフローパターン
 
-Companion code for Chapter 2 of *Multi-Agent Development with Claude Code*.
+「Claude Codeマルチエージェント実践ガイド」第2章のサンプルコードです。
 
-## Files
+## ファイル
 
-| File | Type | Description |
-|------|------|-------------|
-| `prompt-chain.sh` | Shell | Prompt chaining pattern: sequential execution with gates |
-| `routing.sh` | Shell | Routing pattern: model selection based on task classification |
-| `parallel-review.sh` | Shell | Parallelization pattern: code review across three perspectives |
-| `eval-optimize-loop.sh` | Shell | Evaluator-optimizer pattern: iterative improvement loop |
+| ファイル | 種別 | 説明 |
+|---------|------|------|
+| `prompt-chain.sh` | シェル | プロンプトチェーンパターン: ゲート付き逐次実行 |
+| `routing.sh` | シェル | ルーティングパターン: タスク分類に基づくモデル選択 |
+| `parallel-review.sh` | シェル | 並列化パターン: 3つの視点によるコードレビュー |
+| `eval-optimize-loop.sh` | シェル | 評価者・最適化者パターン: 反復的な改善ループ |
 
-## Usage
+## 使い方
 
-Each script runs independently. Execute from the project root directory.
+各スクリプトは独立して実行できます。プロジェクトのルートディレクトリから実行してください。
 
 ```bash
-# Prompt chaining (type check -> add tests)
+# プロンプトチェーン（型チェック -> テスト追加）
 bash prompt-chain.sh
 
-# Routing (set the USER_QUERY variable before running)
-USER_QUERY="Explain how authentication works" bash routing.sh
+# ルーティング（実行前に USER_QUERY 変数をセット）
+USER_QUERY="認証の仕組みを説明してください" bash routing.sh
 
-# Parallel review (reviews the diff between main and HEAD)
+# 並列レビュー（main と HEAD の差分をレビューする）
 bash parallel-review.sh
 
-# Evaluator-optimizer loop (up to 3 improvement cycles)
+# 評価者・最適化者ループ（最大3回の改善サイクル）
 bash eval-optimize-loop.sh
 ```
 
-## Prerequisites
+## 動作要件
 
-- Claude Code CLI (latest version)
-- Node.js / npm (`prompt-chain.sh` uses `npx tsc` and `npm test`)
-- jq (`routing.sh`, `eval-optimize-loop.sh` use it for JSON parsing)
-- Git (`parallel-review.sh` uses `git diff`)
+- Claude Code CLI（最新版）
+- Node.js / npm（`prompt-chain.sh` が `npx tsc` と `npm test` を使用）
+- jq（`routing.sh`、`eval-optimize-loop.sh` がJSON解析に使用）
+- Git（`parallel-review.sh` が `git diff` を使用）

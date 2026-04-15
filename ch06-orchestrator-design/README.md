@@ -1,34 +1,34 @@
-# Ch06: Orchestrator Design
+# 第6章: オーケストレーターの設計
 
-Sample code for Chapter 6 of "Multi-Agent Development with Claude Code."
+「Claude Codeマルチエージェント実践ガイド」第6章のサンプルコードです。
 
-## Files
+## ファイル
 
-| File | Type | Description |
-|------|------|-------------|
-| `agents/coordinator.md` | Subagent definition | Custom orchestrator (launched with `claude --agent`) |
-| `CLAUDE-delegation-policy.md` | CLAUDE.md example | Delegation rules to add to your project's `CLAUDE.md` |
+| ファイル | 種別 | 説明 |
+|---------|------|------|
+| `agents/coordinator.md` | サブエージェント定義 | カスタムオーケストレーター（`claude --agent` で起動） |
+| `CLAUDE-delegation-policy.md` | CLAUDE.md の例 | プロジェクトの `CLAUDE.md` に追加する委譲ルール |
 
-## Usage
+## 使い方
 
-### Launch the custom orchestrator
+### カスタムオーケストレーターの起動
 
 ```bash
-# Place coordinator.md in .claude/agents/, then:
+# coordinator.md を .claude/agents/ に配置してから実行
 claude --agent coordinator
 ```
 
-The `coordinator` runs on the Opus model and decides when to delegate to subagents based on task complexity.
+`coordinator` は Opus モデルで動作し、タスクの複雑さに基づいてサブエージェントへの委譲タイミングを判断します。
 
-### Add delegation rules to CLAUDE.md
+### CLAUDE.md への委譲ルールの追加
 
-Append the contents of `CLAUDE-delegation-policy.md` to your project's `CLAUDE.md` to guide the main session's delegation behavior:
+`CLAUDE-delegation-policy.md` の内容をプロジェクトの `CLAUDE.md` に追記することで、メインセッションの委譲動作を制御できます。
 
 ```bash
 cat CLAUDE-delegation-policy.md >> your-project/CLAUDE.md
 ```
 
-## Prerequisites
+## 動作要件
 
-- Claude Code CLI (latest version)
-- Subagents must be placed in `.claude/agents/` before launching the coordinator. This repo provides `code-reviewer.md` / `test-writer.md` / `project-expert.md` / `security-auditor.md` in ch04. Copy the ones you need to `.claude/agents/`, or adjust the delegation rules in `CLAUDE-delegation-policy.md` to match your existing agents.
+- Claude Code CLI（最新版）
+- コーディネーターを起動する前に、サブエージェントを `.claude/agents/` に配置しておく必要があります。このリポジトリでは `code-reviewer.md` / `test-writer.md` / `project-expert.md` / `security-auditor.md` を第4章で提供しています。必要なものを `.claude/agents/` にコピーするか、`CLAUDE-delegation-policy.md` の委譲ルールを既存のエージェントに合わせて修正してください。

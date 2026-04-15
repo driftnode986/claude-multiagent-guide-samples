@@ -1,46 +1,46 @@
-# Ch03: How Subagents Work
+# 第3章: サブエージェントの仕組み
 
-Sample code for Chapter 3 of *Multi-Agent Development with Claude Code*.
+「Claude Codeマルチエージェント実践ガイド」第3章のサンプルコードです。
 
-## Overview
+## 概要
 
-This chapter covers how the `Agent` tool works, the subagent lifecycle, and built-in subagents (Explore / Plan / General-purpose). Since the subject is Claude Code's automatic subagent selection, this directory provides **minimal demo materials for reproducing the three hands-on examples** from the chapter.
+この章では、`Agent` ツールの動作原理、サブエージェントのライフサイクル、および組み込みサブエージェント（Explore / Plan / 汎用）を扱います。テーマはClaude Codeによるサブエージェントの自動選択であるため、このディレクトリは**本章の3つのハンズオン例を再現するための最小限のデモ素材**を提供します。
 
-## Files
+## ファイル
 
-| File | Purpose |
-|------|---------|
-| `demo-prompts.md` | Prompts to reproduce Examples 1-3 from Ch3 |
-| `sample-codebase/src/middleware/auth.ts` | Auth middleware stub (target for Explore in Example 1) |
-| `sample-codebase/src/routes/protected.ts` | Protected endpoint stub |
-| `sample-codebase/src/utils/token.ts` | Session verification utility stub |
-| `sample-codebase/tests/auth.test.ts` | Auth test stub |
+| ファイル | 用途 |
+|---------|------|
+| `demo-prompts.md` | 第3章の例1〜3を再現するためのプロンプト |
+| `sample-codebase/src/middleware/auth.ts` | 認証ミドルウェアのスタブ（例1のExploreの対象） |
+| `sample-codebase/src/routes/protected.ts` | 保護されたエンドポイントのスタブ |
+| `sample-codebase/src/utils/token.ts` | セッション検証ユーティリティのスタブ |
+| `sample-codebase/tests/auth.test.ts` | 認証テストのスタブ |
 
-## Quick Start
+## クイックスタート
 
 ```bash
 cd ch03-subagent-basics/sample-codebase
 claude
 ```
 
-After launching Claude Code, paste the Example 1 prompt from `demo-prompts.md`. Claude Code should delegate investigation to the Explore subagent, discovering and summarizing the four files. The actual subagent invoked depends on the Claude Code version and prompt wording -- check `demo-prompts.md` observation points to verify behavior.
+Claude Codeを起動したら、`demo-prompts.md` の例1のプロンプトを貼り付けてください。Claude CodeがExploreサブエージェントに調査を委譲し、4つのファイルを発見・要約するはずです。実際に呼び出されるサブエージェントはClaude Codeのバージョンとプロンプトの文言によって異なります。動作を確認するには `demo-prompts.md` の観察ポイントを参照してください。
 
-Example 3 (Git worktree isolation) requires a Git repository. Since this companion repo is already Git-managed, just `git clone` and `cd` into `sample-codebase/`. Do not run `git init` inside the companion repo (it would create a nested Git repository).
+例3（Gitワークツリーの分離）はGitリポジトリが必要です。このリポジトリはすでにGit管理されているので、`git clone` して `sample-codebase/` に `cd` するだけで使えます。リポジトリ内で `git init` を実行しないでください（ネストしたGitリポジトリが作成されてしまいます）。
 
-## About the Sample Files
+## サンプルファイルについて
 
-The TypeScript files under `sample-codebase/` **intentionally omit full type resolution and won't compile**. They're stubs designed for Explore to discover and summarize. They also serve as a starting point for readers to practice JWT refactoring.
+`sample-codebase/` 以下のTypeScriptファイルは**意図的に型解決を省略しており、コンパイルできません**。Exploreが発見・要約するためのスタブです。また、読者がJWTリファクタリングを練習するための出発点としても利用できます。
 
-## What You'll Learn
+## 学習内容
 
-- Subagent definitions and independent context windows
-- `Agent` tool parameters (`description`, `prompt`, `subagent_type`, `model`, `isolation`, `run_in_background`)
-- Foreground vs. background execution modes
-- Built-in subagent selection (Explore, Plan, General-purpose)
-- Subagent constraints (no nesting, no shared context, no session persistence)
-- Subagents vs. agent teams
+- サブエージェントの定義と独立したコンテキストウィンドウ
+- `Agent` ツールのパラメータ（`description`、`prompt`、`subagent_type`、`model`、`isolation`、`run_in_background`）
+- フォアグラウンドとバックグラウンドの実行モード
+- 組み込みサブエージェントの選択（Explore、Plan、汎用）
+- サブエージェントの制約（ネスト不可、コンテキスト非共有、セッション非永続）
+- サブエージェントとエージェントチームの違い
 
-## Prerequisites
+## 動作要件
 
-- Claude Code CLI (latest version)
-- Git (for Example 3)
+- Claude Code CLI（最新版）
+- Git（例3で使用）

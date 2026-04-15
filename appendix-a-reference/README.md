@@ -1,29 +1,29 @@
-# Appendix A: Quick Reference Templates
+# 付録A: クイックリファレンス
 
-Companion files for Appendix A of *Multi-Agent Development with Claude Code*.
+「Claude Codeマルチエージェント実践ガイド」付録Aのサンプルファイルです。
 
-## Files
+## ファイル
 
-| File | Type | Description |
-|------|------|-------------|
-| `agent-definition-template.md` | Subagent definition | YAML frontmatter + Markdown body template |
-| `agent-tool-params.json` | JSON | Parameter reference for the `Agent` tool |
-| `mcp-inline-template.yml` | YAML | Inline MCP server definition template |
+| ファイル | 種別 | 説明 |
+|---------|------|------|
+| `agent-definition-template.md` | サブエージェント定義 | YAMLフロントマター + Markdownボディのテンプレート |
+| `agent-tool-params.json` | JSON | `Agent` ツールのパラメータリファレンス |
+| `mcp-inline-template.yml` | YAML | インラインMCPサーバー定義テンプレート |
 
-## Usage
+## 使い方
 
-### Creating a Subagent Definition
+### サブエージェント定義の作成
 
-Copy `agent-definition-template.md` into `.claude/agents/` in your project. Replace the `name`, `description`, `model`, and `tools` fields with your own values. The Markdown body becomes the subagent's system prompt.
+`agent-definition-template.md` をプロジェクトの `.claude/agents/` にコピーします。`name`、`description`、`model`、`tools` フィールドを自分の値に書き換えてください。Markdownのボディ部分がサブエージェントのシステムプロンプトになります。
 
-### Agent Tool Parameters
+### Agent ツールのパラメータ
 
-`agent-tool-params.json` shows the parameter structure used when Claude Code spawns a subagent internally. The `prompt` field is the most important -- it contains the detailed instructions for the subagent.
+`agent-tool-params.json` はClaude Codeがサブエージェントを内部でスポーンする際に使用するパラメータ構造を示しています。最も重要なのは `prompt` フィールドで、サブエージェントへの詳細な指示が含まれます。
 
-### MCP Inline Definition
+### MCPインライン定義
 
-`mcp-inline-template.yml` is a template for defining MCP servers inline within a subagent definition. Use `${API_KEY}` syntax for environment variable references.
+`mcp-inline-template.yml` はサブエージェント定義内でMCPサーバーをインラインで定義するためのテンプレートです。環境変数の参照には `${API_KEY}` 構文を使用します。
 
-## Prerequisites
+## 動作要件
 
-- Claude Code CLI (latest version)
+- Claude Code CLI（最新版）
