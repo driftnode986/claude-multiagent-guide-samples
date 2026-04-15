@@ -54,8 +54,8 @@ In a Claude Code session, ask a question like:
 Show me the onboarding procedure
 ```
 
-The `kb__search_articles` tool fires first in `concise` mode, returning just
-article counts. Drill into a specific article with `kb__get_article_detail`
+The `mcp__kb__search_articles` tool fires first in `concise` mode, returning just
+article counts. Drill into a specific article with `mcp__kb__get_article_detail`
 or by re-querying with `response_format=detailed`.
 
 ## ACI 6 Principles Mapped to server.py
