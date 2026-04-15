@@ -1,88 +1,89 @@
-# Ch07: ツール設計・ACI
+# Ch07: Tool Design and ACI
 
-書籍「Claude Code マルチエージェント実践ガイド」第7章のサンプルコードです。
+Sample code for Chapter 7 of *Multi-Agent Development with Claude Code*.
 
-## ファイル一覧
+## Files
 
-### 動く MCP サーバー実装
+### Working MCP Server Implementation
 
-| ファイル | 種類 | 説明 |
-|---------|------|------|
-| `server.py` | FastMCP サーバー | ACI 6 原則を体現する社内ナレッジベース検索サーバー（約170行） |
-| `pyproject.toml` | プロジェクト定義 | `mcp[cli]` と `pydantic` の依存定義 |
+| File | Type | Description |
+|------|------|-------------|
+| `server.py` | FastMCP server | Internal knowledge base search server embodying the 6 ACI principles (~170 lines) |
+| `pyproject.toml` | Project config | Dependency definitions for `mcp[cli]` and `pydantic` |
 
-### ツールスキーマ参考例
+### Tool Schema Reference Examples
 
-| ファイル | 種類 | 説明 |
-|---------|------|------|
-| `schemas/search-customers.json` | ツールスキーマ | `response_format`による詳細度制御パターン |
-| `schemas/search-logs.json` | ツールスキーマ | ページネーション（`limit`/`offset`）パターン |
-| `schemas/list-issues.json` | ツールスキーマ | `enum`フィルタリングパターン |
-| `schemas/search-knowledge-base.json` | ツールスキーマ | 詳細な`description`記述の実例 |
-| `schemas/read-tool.json` | ツールスキーマ | 絶対パス強制パターン（Claude Code実例） |
-| `schemas/grep-tool.json` | ツールスキーマ | 出力モード制御パターン（Claude Code実例） |
+| File | Type | Description |
+|------|------|-------------|
+| `schemas/search-customers.json` | Tool schema | `response_format` verbosity control pattern |
+| `schemas/search-logs.json` | Tool schema | Pagination (`limit`/`offset`) pattern |
+| `schemas/list-issues.json` | Tool schema | `enum` filtering pattern |
+| `schemas/search-knowledge-base.json` | Tool schema | Detailed `description` writing example |
+| `schemas/read-tool.json` | Tool schema | Absolute path enforcement pattern (Claude Code example) |
+| `schemas/grep-tool.json` | Tool schema | Output mode control pattern (Claude Code example) |
 
-## クイックスタート（server.py を動かす）
+## Quick Start (Running server.py)
 
-### 1. インストール
+### 1. Install
 
 ```bash
 cd ch07-tool-design-aci
 uv sync
 ```
 
-または `uv` を使わない場合:
+Or without `uv`:
 
 ```bash
 pip install "mcp[cli]>=1.12" "pydantic>=2.0"
 ```
 
-### 2. Claude Code に登録
+### 2. Register with Claude Code
 
 ```bash
 claude mcp add --transport stdio kb -- uv run /absolute/path/to/server.py
 ```
 
-`/absolute/path/to/server.py` は環境に合わせて実パスに置き換えてください。
-登録後、Claude Code 起動中に `/mcp` で `kb` サーバーの状態を確認できます。
+Replace `/absolute/path/to/server.py` with the actual path on your machine.
+After registration, run `/mcp` inside Claude Code to verify the `kb` server status.
 
-### 3. 動作確認
+### 3. Try It Out
 
-Claude Code セッションで以下のように質問すると、`kb__search_articles` ツールが
-呼ばれます。
+In a Claude Code session, ask a question like:
 
 ```text
-社内のオンボーディング手順を教えて
+Show me the onboarding procedure
 ```
 
-最初は `concise` モードで件数だけ返り、注目した記事を `kb__get_article_detail`
-または `response_format=detailed` で深掘りする想定です。
+The `kb__search_articles` tool fires first in `concise` mode, returning just
+article counts. Drill into a specific article with `kb__get_article_detail`
+or by re-querying with `response_format=detailed`.
 
-## ACI 6 原則と server.py の対応
+## ACI 6 Principles Mapped to server.py
 
-| 原則 | server.py での体現箇所 |
-|------|----------------------|
-| 1. 適切なツールを選ぶ | 全件取得 `list_articles` を作らず、`search_articles` のみ提供 |
-| 2. ツールを統合する | カテゴリ・キーワード・ページネーションを 1 ツールに集約 |
-| 3. 名前空間で境界を明確にする | `claude mcp add` の登録名 `kb` → `mcp__kb__search_articles` |
-| 4. 意味のあるコンテキストを返す | UUID ではなく `kb-deploy-002` 形式の人間可読な ID |
-| 5. トークン効率を最適化する | `response_format` (concise/detailed) と `limit/offset` |
-| 6. ツール説明をプロンプトエンジニアリング | docstring に使用場面・対象外・ヒントを記述 |
+| Principle | How server.py Implements It |
+|-----------|---------------------------|
+| 1. Choose the right tools | No `list_articles` dump — only `search_articles` with filtering |
+| 2. Consolidate functionality | Category, keyword, and pagination combined in one tool |
+| 3. Namespace with clear boundaries | Registered as `kb` → tools appear as `mcp__kb__search_articles` |
+| 4. Return meaningful context | Human-readable IDs like `kb-deploy-002` instead of UUIDs |
+| 5. Optimize token efficiency | `response_format` (concise/detailed) plus `limit`/`offset` |
+| 6. Prompt-engineer tool descriptions | Docstring includes use cases, exclusions, and hints |
 
-## ツールスキーマ参考例の活用
+## Using the Tool Schema References
 
-`schemas/` ディレクトリの JSON ファイルは、自作 MCP サーバーのツール定義リファレンス
-として参照してください。各パターンは server.py 内の対応箇所と一緒に確認できます。
+The JSON files in `schemas/` serve as reference patterns for designing your own
+MCP server tool definitions. Each pattern maps to a corresponding section in
+server.py:
 
-- **詳細度制御**: `search-customers.json` ↔ `server.py` の `response_format`
-- **ページネーション**: `search-logs.json` ↔ `server.py` の `limit`/`offset`
-- **フィルタリング**: `list-issues.json` ↔ `server.py` の `category`
-- **説明文の書き方**: `search-knowledge-base.json` ↔ `server.py` の docstring
-- **パス安全性**: `read-tool.json` -- Claude Code 実例
-- **出力モード**: `grep-tool.json` -- Claude Code 実例
+- **Verbosity control**: `search-customers.json` ↔ `response_format` in server.py
+- **Pagination**: `search-logs.json` ↔ `limit`/`offset` in server.py
+- **Filtering**: `list-issues.json` ↔ `category` in server.py
+- **Description writing**: `search-knowledge-base.json` ↔ docstring in server.py
+- **Path safety**: `read-tool.json` — Claude Code built-in example
+- **Output modes**: `grep-tool.json` — Claude Code built-in example
 
-## 前提条件
+## Prerequisites
 
-- Claude Code CLI（最新版）
-- Python 3.10 以上
-- `mcp[cli]` 1.12 以上
+- Claude Code CLI (latest)
+- Python 3.10+
+- `mcp[cli]` 1.12+

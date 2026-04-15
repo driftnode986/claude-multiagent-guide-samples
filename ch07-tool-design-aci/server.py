@@ -1,12 +1,12 @@
-"""社内ナレッジベース検索 MCP サーバー（Ch7 サンプル）
+"""Internal Knowledge Base Search MCP Server (Ch07 Sample)
 
-ACI 6 原則を体現する FastMCP サーバー実装。
-書籍「Claude Code マルチエージェント実践ガイド」第7章 参照。
+A FastMCP server implementation embodying the 6 ACI principles.
+See Chapter 7 of *Multi-Agent Development with Claude Code*.
 
-検証環境: mcp[cli] >= 1.12, Python >= 3.10
-起動方法:
+Tested with: mcp[cli] >= 1.12, Python >= 3.10
+Run:
     uv run server.py
-Claude Code への登録（登録名 kb と FastMCP 内部名を一致させる）:
+Register with Claude Code (match the registration name to the FastMCP name):
     claude mcp add --transport stdio kb -- uv run /path/to/server.py
 """
 
@@ -18,34 +18,34 @@ from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("kb")
 
-# --- データセット（本番では DB / API / ベクトル検索に置き換える） ---
+# --- Dataset (replace with a DB / API / vector search in production) ---
 ARTICLES: dict[str, dict] = {
     "kb-onboarding-001": {
-        "title": "新メンバー向けオンボーディングガイド",
+        "title": "New Member Onboarding Guide",
         "category": "hr",
-        "summary": "入社初日から1週間の手順とアクセス申請の流れ",
-        "body": "1日目: PCセットアップとSlack参加。2日目: VPN申請。",
+        "summary": "Day-one through week-one steps and access request workflow",
+        "body": "Day 1: PC setup and Slack onboarding. Day 2: VPN request.",
         "updated_at": "2026-03-15",
     },
     "kb-deploy-002": {
-        "title": "本番デプロイの承認フロー",
+        "title": "Production Deploy Approval Flow",
         "category": "engineering",
-        "summary": "ステージング検証から本番リリースまでの手順",
-        "body": "本番デプロイには2名以上のレビューが必要です。",
+        "summary": "Steps from staging verification to production release",
+        "body": "Production deploys require approval from at least two reviewers.",
         "updated_at": "2026-04-01",
     },
     "kb-incident-003": {
-        "title": "インシデント対応プレイブック",
+        "title": "Incident Response Playbook",
         "category": "engineering",
-        "summary": "P0/P1 インシデント発生時の初動と連絡先",
-        "body": "P0 が発生したら即座に #incident-war-room へ。",
+        "summary": "First-response actions and contact list for P0/P1 incidents",
+        "body": "On a P0 incident, immediately join #incident-war-room.",
         "updated_at": "2026-03-28",
     },
     "kb-expense-004": {
-        "title": "経費精算の申請方法",
+        "title": "Expense Report Submission Guide",
         "category": "finance",
-        "summary": "領収書のアップロードから承認までの3ステップ",
-        "body": "経費は月末締め翌月10日払いです。",
+        "summary": "Three-step process from receipt upload to approval",
+        "body": "Expenses close at month-end; reimbursement arrives on the 10th.",
         "updated_at": "2026-02-20",
     },
 }
@@ -55,31 +55,31 @@ ResponseFormat = Literal["concise", "detailed"]
 
 
 class ArticleSummary(BaseModel):
-    """検索結果に含める最小限の記事情報。"""
+    """Minimal article info included in search results."""
 
-    article_id: str = Field(description="記事ID（例: kb-deploy-002）")
-    title: str = Field(description="記事タイトル")
-    category: str = Field(description="カテゴリ名")
-    updated_at: str = Field(description="最終更新日 YYYY-MM-DD")
+    article_id: str = Field(description="Article ID (e.g. kb-deploy-002)")
+    title: str = Field(description="Article title")
+    category: str = Field(description="Category name")
+    updated_at: str = Field(description="Last updated date (YYYY-MM-DD)")
 
 
 class ArticleDetail(ArticleSummary):
-    """記事の全フィールド（detailed モードまたは詳細取得時）。"""
+    """Full article fields (detailed mode or single-article fetch)."""
 
-    summary: str = Field(description="1〜2文の要約")
-    body: str = Field(description="本文（マークダウン）")
+    summary: str = Field(description="One- to two-sentence summary")
+    body: str = Field(description="Full body text (Markdown)")
 
 
 class SearchResult(BaseModel):
-    """検索レスポンスのトップレベル構造。"""
+    """Top-level structure for search responses."""
 
     results: list[ArticleSummary | ArticleDetail] = Field(
-        description="マッチした記事の一覧"
+        description="List of matched articles"
     )
-    total_count: int = Field(description="フィルタ条件に合う総件数")
-    showing: int = Field(description="このレスポンスで返した件数")
+    total_count: int = Field(description="Total matches for the filter criteria")
+    showing: int = Field(description="Number of results in this response")
     next_offset: int | None = Field(
-        description="次ページがある場合の offset、なければ null"
+        description="Offset for the next page, or null if no more pages"
     )
 
 
@@ -91,27 +91,29 @@ def search_articles(
     limit: int = 20,
     offset: int = 0,
 ) -> SearchResult:
-    """社内ナレッジベースをキーワードで検索します。
+    """Search the internal knowledge base by keyword.
 
-    最初は短く広いクエリから始め、結果に応じて絞り込んでください。
-    検索対象: 業務手順書、設計書、運用ルール、HR ポリシー。
-    検索対象外: ソースコード（コード検索には別ツールを使ってください）。
+    Start with a short, broad query, then narrow down based on results.
+    Covers: process docs, design docs, runbooks, HR policies.
+    Does NOT cover: source code (use the code search tool instead).
 
-    使い方のヒント:
-    - query: 日本語で入力。空白区切りで複数語を指定できます
-    - category: 領域に絞り込みたいときのみ指定。未指定で全カテゴリ
-    - response_format: 初回は 'concise' で件数を確認し、注目する記事のみ
-      'detailed' で本文を取得してください。常に 'detailed' は避けること
-    - limit / offset: 'next_offset' が null になるまで繰り返し取得できます
+    Usage hints:
+    - query: one or more keywords separated by spaces
+    - category: specify only when narrowing to a specific domain;
+      omit to search all categories
+    - response_format: use 'concise' first to scan result counts,
+      then fetch 'detailed' only for articles of interest — avoid
+      requesting 'detailed' for every search
+    - limit / offset: page through results until 'next_offset' is null
     """
     if not query.strip():
         raise ValueError(
-            "query は空にできません。検索キーワードを1語以上入力してください"
+            "query must not be empty. Provide at least one search keyword."
         )
     if limit < 1 or limit > 100:
-        raise ValueError("limit は 1〜100 の範囲で指定してください")
+        raise ValueError("limit must be between 1 and 100.")
     if offset < 0:
-        raise ValueError("offset は 0 以上で指定してください")
+        raise ValueError("offset must be 0 or greater.")
 
     terms = query.lower().split()
     matches = [
@@ -153,17 +155,17 @@ def search_articles(
 
 @mcp.tool()
 def get_article_detail(article_id: str) -> ArticleDetail:
-    """指定した記事IDの全文を取得します。
+    """Retrieve the full text of an article by its ID.
 
-    通常は search_articles で article_id を取得してから呼び出します。
-    存在しない ID の場合は ValueError を返し、修正方法を含めます。
+    Typically called after obtaining article_id from search_articles.
+    Returns a ValueError with correction hints for unknown IDs.
     """
     if article_id not in ARTICLES:
         examples = ", ".join(list(ARTICLES.keys())[:3])
         raise ValueError(
-            f"article_id '{article_id}' は存在しません。"
-            f"search_articles で正しい ID を取得してください。"
-            f"例: {examples}"
+            f"article_id '{article_id}' does not exist. "
+            f"Use search_articles to find the correct ID. "
+            f"Examples: {examples}"
         )
     a = ARTICLES[article_id]
     return ArticleDetail(article_id=article_id, **a)

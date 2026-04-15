@@ -1,7 +1,7 @@
 [project]
 name = "ch07-knowledge-base-mcp"
 version = "0.1.0"
-description = "ACI 6 原則を体現する FastMCP サーバーの最小実装"
+description = "Minimal FastMCP server embodying the 6 ACI principles"
 requires-python = ">=3.10"
 dependencies = [
     "mcp[cli]>=1.12",

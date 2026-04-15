@@ -1,4 +1,4 @@
 {
   "name": "search_knowledge_base",
-  "description": "社内ナレッジベースをキーワードで検索します。短くて広いクエリから始め、結果に基づいて絞り込んでください。検索対象: 技術ドキュメント、設計書、議事録。対象外: ソースコード（コード検索にはgrep_codeを使用）。クエリは日本語で入力してください。"
+  "description": "Search the internal knowledge base by keyword. Start with a short, broad query and narrow down based on results. Covers: technical docs, design docs, meeting notes. Does NOT cover: source code (use grep_code for code search)."
 }
