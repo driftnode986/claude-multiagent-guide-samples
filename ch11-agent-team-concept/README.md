@@ -1,34 +1,34 @@
-# Ch11: エージェントチームの概念と有効化
+# Ch11: Getting Started with Agent Teams
 
-書籍「Claude Code マルチエージェント実践ガイド」第11章のサンプルコードです。
+Sample code for Chapter 11 of *Multi-Agent Development with Claude Code*.
 
-## ファイル一覧
+## Files
 
-| ファイル | 種類 | 説明 |
-|---------|------|------|
-| `settings-agent-teams.json` | JSON | エージェントチーム機能を有効化する `settings.json` 設定 |
-| `agents/security-reviewer.md` | サブエージェント定義 | セキュリティレビュー用サブエージェント（ツール制限付き） |
+| File | Type | Description |
+|------|------|-------------|
+| `settings-agent-teams.json` | JSON | `settings.json` config to enable the agent teams feature |
+| `agents/security-reviewer.md` | Subagent definition | Security review subagent with restricted tool access |
 
-## 使い方
+## Usage
 
-### エージェントチームの有効化
+### Enabling Agent Teams
 
-`settings-agent-teams.json` の内容を、プロジェクトの `.claude/settings.json` またはユーザー設定 `~/.claude/settings.json` にマージしてください。
+Merge the contents of `settings-agent-teams.json` into your project's `.claude/settings.json` or user settings at `~/.claude/settings.json`.
 
 ```bash
-# または環境変数で設定
+# Or set via environment variable
 export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 ```
 
-### サブエージェント定義のチームメイトへの再利用
+### Reusing Subagent Definitions as Teammates
 
-`agents/security-reviewer.md` を `.claude/agents/` に配置すると、チームメイト生成時に参照できます。
+Place `agents/security-reviewer.md` in `.claude/agents/`. The orchestrator can then reference it when spawning teammates.
 
 ```text
-security-reviewer エージェントタイプを使って、
-認証モジュールを監査するチームメイトを生成してください。
+Using the security-reviewer agent type,
+spawn a teammate to audit the authentication module.
 ```
 
-## 前提条件
+## Prerequisites
 
-- Claude Code CLI（v2.1.32以降）
+- Claude Code CLI (v2.1.32 or later)

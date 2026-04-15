@@ -1,10 +1,10 @@
 #!/bin/bash
-# 書籍「Claude Code マルチエージェント実践ガイド」第12章
-# チームメイトのアイドル時にテストを実行
+# Multi-Agent Development with Claude Code — Chapter 12
+# Run tests when a teammate goes idle
 
 cd "$PROJECT_DIR"
 if ! npm test --silent 2>/dev/null; then
-  echo "テストが失敗しています。修正してから完了してください。"
-  exit 2  # 終了コード2: フィードバックを送信して作業を継続させる
+  echo "Tests are failing. Fix them before marking the task complete."
+  exit 2  # Exit code 2: send feedback and keep the teammate working
 fi
 exit 0

@@ -1,31 +1,31 @@
-# Ch12: 実践・並列開発
+# Ch12: Agent Teams in Practice
 
-書籍「Claude Code マルチエージェント実践ガイド」第12章のサンプルコードです。
+Sample code for Chapter 12 of *Multi-Agent Development with Claude Code*.
 
-## ファイル一覧
+## Files
 
-| ファイル | 種類 | 説明 |
-|---------|------|------|
-| `claude-json-teammate-mode.json` | JSON | `~/.claude.json` に配置するチームメイト表示モード設定 |
-| `settings-teammate-idle.json` | JSON | TeammateIdle Hooks の `settings.json` 設定 |
-| `hooks/check-teammate-idle.sh` | Shell | チームメイトのアイドル時にテストを実行する品質ゲート |
-| `hooks/check-task-completed.sh` | Shell | タスク完了時にリントとテストを確認する品質ゲート |
+| File | Type | Description |
+|------|------|-------------|
+| `claude-json-teammate-mode.json` | JSON | Teammate display mode setting for `~/.claude.json` |
+| `settings-teammate-idle.json` | JSON | `settings.json` config for TeammateIdle hooks |
+| `hooks/check-teammate-idle.sh` | Shell | Quality gate that runs tests when a teammate goes idle |
+| `hooks/check-task-completed.sh` | Shell | Quality gate that checks lint and tests on task completion |
 
-## 使い方
+## Usage
 
-### 表示モードの設定
+### Display Mode Configuration
 
-`claude-json-teammate-mode.json` の内容を `~/.claude.json` にマージしてください。選択肢は `"auto"`（デフォルト）、`"in-process"`、`"split-pane"` です。
+Merge the contents of `claude-json-teammate-mode.json` into `~/.claude.json`. Options are `"auto"` (default), `"in-process"`, or `"split-pane"`.
 
-### Hooks による品質ゲート
+### Quality Gates via Hooks
 
-1. `settings-teammate-idle.json` の内容をプロジェクトの `.claude/settings.json` にマージ
-2. `hooks/` 配下のスクリプトを `.claude/hooks/` にコピー
-3. 実行権限を付与: `chmod +x .claude/hooks/*.sh`
+1. Merge `settings-teammate-idle.json` into your project's `.claude/settings.json`
+2. Copy the scripts under `hooks/` to `.claude/hooks/`
+3. Grant execute permissions: `chmod +x .claude/hooks/*.sh`
 
-Hooks は終了コード `2` でフィードバックを返し、チームメイトに作業の継続を指示します。
+Hooks return exit code `2` to send feedback and instruct the teammate to continue working.
 
-## 前提条件
+## Prerequisites
 
-- Claude Code CLI（最新版）
-- Node.js プロジェクト（`npm test` / `npm run lint` が動作すること）
+- Claude Code CLI (latest version)
+- A Node.js project with working `npm test` / `npm run lint`
