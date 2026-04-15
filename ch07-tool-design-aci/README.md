@@ -40,7 +40,7 @@ pip install "mcp[cli]>=1.12" "pydantic>=2.0"
 ### 2. Register with Claude Code
 
 ```bash
-claude mcp add --transport stdio kb -- uv run /absolute/path/to/server.py
+claude mcp add kb --transport stdio -- uv run /absolute/path/to/server.py
 ```
 
 Replace `/absolute/path/to/server.py` with the actual path on your machine.
