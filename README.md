@@ -67,3 +67,4 @@ cat ch11-agent-team-concept/settings-agent-teams.json
 
 - **タイトル**: Claude Codeマルチエージェント実践ガイド
 - **著者**: 牧野 誠
+- **Amazon**: [Claude Code マルチエージェント実践ガイド](https://www.amazon.co.jp/dp/B0GWVLHTH1)
