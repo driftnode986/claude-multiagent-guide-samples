@@ -1,16 +1,16 @@
-## グレースフルデグレードルール（CLAUDE.mdに記載）
+## Graceful Degradation Rules (include in CLAUDE.md)
 
-### MCPサーバーが利用不可の場合
-- GitHub MCP不可 → `gh` CLIコマンドで代替する
-- Playwright MCP不可 → テストをスキップし、後で手動確認する
-- データベースMCP不可 → ローカルのSQLiteで検証する
+### When MCP servers are unavailable
+- GitHub MCP unavailable -> use `gh` CLI commands instead
+- Playwright MCP unavailable -> skip tests, flag for manual verification later
+- Database MCP unavailable -> validate with local SQLite
 
-### 外部サービスが全て不可の場合
-- ローカルツールのみで可能な作業に集中する
-- 外部依存のタスクを "blocked" として記録する
-- ブロックされたタスクのリストを報告する
+### When all external services are unavailable
+- Focus on work achievable with local tools only
+- Record tasks with external dependencies as "blocked"
+- Report the list of blocked tasks
 
-### コンテキストが劣化した場合
-- 進捗ファイルに現在の状態を詳細に記録する
-- Git commitで現在のコードを保存する
-- 「次のセッションへの引き継ぎ」を記録して終了する
+### When context has degraded
+- Record the current state in detail in the progress file
+- Save current code with a Git commit
+- Record "handoff notes for the next session" and terminate

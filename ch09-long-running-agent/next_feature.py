@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""feature_list.json から最優先の未完了 feature を返す。
+"""Return the highest-priority incomplete feature from feature_list.json.
 
-各セッションの開始時にコーディングエージェントが呼び出す。
-最初の `passes: false` を JSON で stdout に出力する。
-全 feature が完了している場合は空オブジェクト `{}` を返す。
+Called by the coding agent at the start of each session.
+Outputs the first `passes: false` entry as JSON to stdout.
+Returns an empty object `{}` when all features are complete.
 """
 
 from __future__ import annotations

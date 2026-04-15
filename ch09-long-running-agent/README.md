@@ -1,92 +1,94 @@
-# Ch09: セッションをまたぐ長期エージェント
+# Ch09: Long-Running Agents Across Sessions
 
-書籍「Claude Code マルチエージェント実践ガイド」第9章のサンプルコードです。
-Anthropic Engineering Blog (2025-11)「Effective harnesses for long-running agents」の
-ハーネスを Claude Code で動かすための最小実装を提供します。
+Sample code for Chapter 9 of *Multi-Agent Development with Claude Code*.
+Provides a minimal implementation to run the harness described in
+Anthropic's Engineering Blog (Nov 2025) "Effective harnesses for long-running agents"
+with Claude Code.
 
-## クイックスタート
+## Quick Start
 
 ```bash
-# 1. このディレクトリのスクリプトをパスに置く
+# 1. Make scripts executable
 chmod +x init.sh update_progress.sh
 chmod +x generate_features.py next_feature.py mark_passed.py
 
-# 2. 長期プロジェクトのディレクトリを初期化
+# 2. Initialize a long-running project directory
 ./init.sh /path/to/your/project
 cd /path/to/your/project
 
-# 3. 機能リストを編集
+# 3. Edit the feature list
 $EDITOR features.txt
 
-# 4. feature_list.json を再生成（passes は引き継がれる）
+# 4. Regenerate feature_list.json (passes flags are preserved)
 python3 /path/to/generate_features.py features.txt feature_list.json
 
-# 5. 各セッションでコーディングエージェントが呼ぶコマンド
-python3 next_feature.py            # 次の未完了 feature を取得
-# ...実装...
+# 5. Commands the coding agent calls each session
+python3 next_feature.py            # Get the next incomplete feature
+# ...implement...
 git add -A && git commit -m "feat: <description>"
 python3 mark_passed.py "<description>"
-./update_progress.sh "完了内容" "次のステップ"
+./update_progress.sh "What was completed" "Next steps"
 ```
 
-## ファイル一覧
+## File Listing
 
-### コアスクリプト (5本)
+### Core Scripts (5 files)
 
-| ファイル | 種類 | 説明 |
-|---------|------|------|
-| `init.sh` | bash | 初期化エージェント。features.txt → 各種ファイル → 初期コミット |
-| `generate_features.py` | python | features.txt から feature_list.json を生成。passes 引き継ぎ付き |
-| `next_feature.py` | python | feature_list.json から最優先の未完了 feature を返す |
-| `mark_passed.py` | python | 指定 feature の passes を true に切替（完全一致+1件限定） |
-| `update_progress.sh` | bash | claude-progress.txt にセッションエントリを追記 |
+| File | Type | Description |
+|------|------|-------------|
+| `init.sh` | bash | Initialization agent. features.txt -> files -> initial commit |
+| `generate_features.py` | python | Generate feature_list.json from features.txt. Preserves existing passes |
+| `next_feature.py` | python | Return the highest-priority incomplete feature from feature_list.json |
+| `mark_passed.py` | python | Set passes to true for the specified feature (exact match, single result only) |
+| `update_progress.sh` | bash | Append a session entry to claude-progress.txt |
 
-### テンプレート / 補助
+### Templates / Helpers
 
-| ファイル | 種類 | 説明 |
-|---------|------|------|
-| `feature_list.json` | JSON | 機能リスト構造例（init.sh が生成するスキーマと同形式） |
-| `claude-progress.txt` | テキスト | 進捗ファイルのエントリ例 |
-| `CLAUDE-long-task.md` | テンプレート | 長期タスク管理ルール（CLAUDE.md に追記する内容） |
-| `agents/project-worker.md` | サブエージェント定義 | 永続メモリを活用する長期プロジェクト作業者 |
-| `long-run.sh` | bash | `claude --agent` によるループ実行スクリプト（コンテナ内推奨） |
-| `NOTES-template.md` | テンプレート | 構造化ノートテイキングのテンプレート |
-| `checkpoint-rules.md` | テンプレート | Gitベースのチェックポイントルール |
+| File | Type | Description |
+|------|------|-------------|
+| `feature_list.json` | JSON | Feature list structure example (same schema as init.sh output) |
+| `claude-progress.txt` | text | Progress file entry example |
+| `CLAUDE-long-task.md` | template | Long-running task management rules (append to CLAUDE.md) |
+| `agents/project-worker.md` | subagent definition | Long-running project worker with persistent memory |
+| `long-run.sh` | bash | Loop execution script using `claude --agent` (recommended inside containers) |
+| `NOTES-template.md` | template | Structured note-taking template |
+| `checkpoint-rules.md` | template | Git-based checkpoint rules |
 
-## features.txt の書式
+## features.txt Format
 
 ```text
-# functional: ユーザーがログインできる
-- メールアドレスとパスワードを入力する
-- ログインボタンをクリックする
-- ダッシュボードにリダイレクトされることを確認する
+# functional: User can log in
+- Open the login form
+- Enter email and password
+- Click the login button
+- Verify redirect to dashboard
 
-# functional: ユーザーがログアウトできる
-- ログアウトボタンをクリックする
-- セッションが破棄されることを確認する
+# functional: User can log out
+- Click the logout button
+- Verify the session is destroyed
 ```
 
-- `# <category>: <description>` で feature が始まる
-- `-` で始まる行が steps
-- 空行は区切り
-- category は functional / ui / api / perf など自由
+- `# <category>: <description>` starts a feature
+- Lines starting with `-` are steps
+- Blank lines are separators
+- Categories are free-form: functional, ui, api, perf, etc.
 
-## 4要素との対応
+## Mapping to the Four Elements
 
-| Anthropic の4要素 | 本実装のファイル |
+| Anthropic's Four Elements | Implementation File |
 |---|---|
-| 機能リスト | `feature_list.json` |
-| 進捗ファイル | `claude-progress.txt` |
-| 初期化スクリプト | `init.sh` |
-| 初期コミット | init.sh 内の `git commit` |
+| Feature list | `feature_list.json` |
+| Progress file | `claude-progress.txt` |
+| Initialization script | `init.sh` |
+| Initial commit | `git commit` inside init.sh |
 
-## 前提条件
+## Prerequisites
 
-- Claude Code CLI（最新版）
-- Python 3.10 以上（type hints の `list[dict] | None` 構文を使用）
+- Claude Code CLI (latest version)
+- Python 3.10+ (uses `list[dict] | None` type hint syntax)
 - Git
-- 事前に `git config user.name` / `git config user.email` を設定
+- `git config user.name` / `git config user.email` must be set
 
-## 動作確認
+## Verification
 
-書籍リポジトリから smoke test を流せます。10ステップで全スクリプトの整合を検証します。
+You can run the smoke test from the book repository. It validates all scripts in 10 steps.

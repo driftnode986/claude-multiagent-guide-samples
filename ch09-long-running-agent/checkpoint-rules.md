@@ -1,10 +1,10 @@
-## チェックポイントルール（CLAUDE.mdに記載）
+## Checkpoint Rules (include in CLAUDE.md)
 
-1. 各機能の実装が完了したら、必ずGitにコミットする
-2. コミットメッセージに実装内容を具体的に書く
-3. テストが通る状態でのみコミットする
-4. 問題が発生したら、直前のコミットにリバートできる
+1. Commit to Git after each feature is implemented
+2. Write specific implementation details in the commit message
+3. Only commit when tests are passing
+4. If problems occur, revert to the previous commit
 
-### コミットメッセージの形式
-feat: [機能名] — [具体的な変更内容]
-fix: [バグの概要] — [修正内容]
+### Commit Message Format
+feat: [feature name] -- [specific changes]
+fix: [bug summary] -- [what was fixed]

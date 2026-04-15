@@ -1,15 +1,15 @@
-## 失敗記録: 2026-04-09
+## Failure Record: 2026-04-09
 
-### 発生した失敗
-- カテゴリ: 状態破壊
-- 場面: 認証モジュールのリファクタリング中
-- 原因: 依存する10個のAPIエンドポイントを考慮しなかった
-- 影響: 全E2Eテストが失敗
+### What Failed
+- Category: State corruption
+- Context: During authentication module refactoring
+- Root cause: Failed to account for 10 dependent API endpoints
+- Impact: All E2E tests failed
 
-### 取った対策
-- git revert で変更前の状態に復帰
-- 影響範囲を先に調査してから再実行
+### Actions Taken
+- Reverted to the pre-change state with `git revert`
+- Investigated the blast radius before retrying
 
-### 今後の防止策
-- リファクタリング前に `grep -r "importFrom('auth')" .` で依存を確認する
-- 影響範囲が5ファイル以上の場合は段階的に変更する
+### Prevention Measures
+- Run `grep -r "importFrom('auth')" .` to check dependencies before refactoring
+- When blast radius exceeds 5 files, apply changes incrementally

@@ -1,12 +1,12 @@
 {
   "category": "functional",
-  "description": "新規チャットボタンで新しい会話が作成される",
+  "description": "New chat button creates a new conversation",
   "steps": [
-    "メインインターフェースに移動する",
-    "「新規チャット」ボタンをクリックする",
-    "新しい会話が作成されることを確認する",
-    "チャットエリアがウェルカム状態を表示することを確認する",
-    "会話がサイドバーに表示されることを確認する"
+    "Navigate to the main interface",
+    "Click the 'New Chat' button",
+    "Verify a new conversation is created",
+    "Verify the chat area shows the welcome state",
+    "Verify the conversation appears in the sidebar"
   ],
   "passes": false
 }

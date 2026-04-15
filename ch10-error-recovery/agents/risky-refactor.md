@@ -1,9 +1,9 @@
 ---
 name: risky-refactor
-description: リスクの高いリファクタリングを隔離環境で実行する
+description: Execute risky refactoring in an isolated environment
 isolation: worktree
 ---
 
-リファクタリングを実行してください。
-変更後、全テストがパスすることを確認してから完了としてください。
-テストが失敗する場合は、変更を中止してください。
+Execute the refactoring.
+After making changes, verify that all tests pass before reporting completion.
+If tests fail, abort the changes.

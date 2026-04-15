@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
-# update_progress.sh — claude-progress.txt にセッションエントリを追記する。
+# update_progress.sh -- Append a session entry to claude-progress.txt.
 #
-# 使い方:
-#   ./update_progress.sh "<完了内容>" "<次のステップ>"
+# Usage:
+#   ./update_progress.sh "<completed work>" "<next steps>"
 #
-# 例:
-#   ./update_progress.sh "JWT認証を実装" "リフレッシュトークンの追加"
+# Example:
+#   ./update_progress.sh "Implemented JWT auth" "Add refresh tokens"
 #
-# 出力フォーマット:
+# Output format:
 #   ## YYYY-MM-DD HH:MM <git-short-sha>
-#   - 完了: <完了内容>
-#   - コミット: <sha> "<最新コミットの subject>"
-#   - 次のステップ: <次のステップ>
+#   - Completed: <completed work>
+#   - Commit: <sha> "<latest commit subject>"
+#   - Next steps: <next steps>
 
 set -euo pipefail
 
@@ -36,9 +36,9 @@ TIMESTAMP=$(date '+%Y-%m-%d %H:%M')
 {
     echo
     echo "## ${TIMESTAMP} ${SHA}"
-    echo "- 完了: ${COMPLETED}"
-    echo "- コミット: ${SHA} \"${SUBJECT}\""
-    echo "- 次のステップ: ${NEXT_STEP}"
+    echo "- Completed: ${COMPLETED}"
+    echo "- Commit: ${SHA} \"${SUBJECT}\""
+    echo "- Next steps: ${NEXT_STEP}"
 } >> "$PROGRESS_FILE"
 
 echo "appended to ${PROGRESS_FILE}"

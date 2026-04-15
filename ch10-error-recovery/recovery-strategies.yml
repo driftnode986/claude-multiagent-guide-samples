@@ -1,67 +1,67 @@
-# 書籍「Claude Code マルチエージェント実践ガイド」第10章
-# 失敗モード4分類とリカバリー戦略
+# Multi-Agent Development with Claude Code -- Chapter 10
+# Four Failure Mode Categories and Recovery Strategies
 
-# --- カテゴリ1: ツール失敗（Tool Failure） ---
-ツール失敗への対応:
-  即時リトライ:
-    条件: "タイムアウト、一時的なネットワークエラー"
-    最大回数: 3回
-    バックオフ: "指数（1秒, 2秒, 4秒）"
+# --- Category 1: Tool Failure ---
+Tool Failure Recovery:
+  Immediate Retry:
+    condition: "Timeouts, transient network errors"
+    max_attempts: 3
+    backoff: "Exponential (1s, 2s, 4s)"
 
-  代替ツール:
-    条件: 特定のツールが継続的に失敗
-    例: "Web検索が失敗 → ローカルドキュメントを参照"
+  Alternative Tool:
+    condition: A specific tool fails persistently
+    example: "Web search fails -> consult local documentation instead"
 
-  エージェントへの通知:
-    条件: リトライが全て失敗
-    内容: "GitHubツールが利用不可です。代替手段を検討してください"
+  Notify Agent:
+    condition: All retries exhausted
+    message: "GitHub tool is unavailable. Consider alternative approaches"
 
-# --- カテゴリ2: 判断失敗（Decision Failure） ---
-判断失敗への対応:
-  ツール選択ガイド:
-    方法: プロンプトに明示的なヒューリスティクスを含める
-    例: "ローカルの問題には、まずログファイルを確認する"
+# --- Category 2: Decision Failure ---
+Decision Failure Recovery:
+  Tool Selection Guide:
+    method: Include explicit heuristics in the prompt
+    example: "For local issues, check log files first"
 
-  自己検証:
-    方法: 結果の妥当性をチェックするステップを追加
-    例: "提案する解決策が、実際のエラーメッセージと一致するか確認する"
+  Self-Verification:
+    method: Add a step to check result validity
+    example: "Verify the proposed fix matches the actual error message"
 
-  思考ステップの挿入:
-    方法: アクション前に計画を立てさせる
-    例: "ツールを使う前に、なぜそのツールを選ぶか理由を述べよ"
+  Insert Thinking Step:
+    method: Make the agent plan before acting
+    example: "Before using a tool, state why you chose it"
 
-# --- カテゴリ3: 状態破壊（State Corruption） ---
-状態破壊への対応:
-  回帰テスト:
-    方法: "変更前にテストを実行し、変更後に再実行する"
-    実装: "CIパイプライン、pre-commitフック"
+# --- Category 3: State Corruption ---
+State Corruption Recovery:
+  Regression Tests:
+    method: "Run tests before changes, re-run after"
+    implementation: "CI pipelines, pre-commit hooks"
 
-  Gitチェックポイント:
-    方法: "変更前にコミットし、問題発生時にリバートする"
-    実装: "各機能実装後にコミットすること"
+  Git Checkpoints:
+    method: "Commit before changes, revert if problems occur"
+    implementation: "Commit after each feature implementation"
 
-  段階的変更:
-    方法: 大きな変更を小さなステップに分割する
-    実装: "一度に変更するファイルは3つ以内"
+  Incremental Changes:
+    method: Break large changes into small steps
+    implementation: "Modify no more than 3 files at a time"
 
-  Worktree分離:
-    方法: サブエージェントにworktreeで隔離実行させる
-    実装: "isolation: worktree フロントマター"
+  Worktree Isolation:
+    method: Have subagents execute in isolated worktrees
+    implementation: "isolation: worktree frontmatter"
 
-# --- カテゴリ4: コンテキスト劣化（Context Degradation） ---
-コンテキスト劣化への対応:
-  構造化ノートテイキング:
-    方法: 重要な発見と決定を外部ファイルに記録する
-    実装: "NOTES.md、claude-progress.txt"
+# --- Category 4: Context Degradation ---
+Context Degradation Recovery:
+  Structured Note-Taking:
+    method: Record key findings and decisions in external files
+    implementation: "NOTES.md, claude-progress.txt"
 
-  適切なコンパクション:
-    方法: "古いツール結果を削除し、要約を保持する"
-    実装: Claude Codeの自動コンパクション
+  Appropriate Compaction:
+    method: "Remove old tool results, retain summaries"
+    implementation: Claude Code automatic compaction
 
-  サブエージェントへの委譲:
-    方法: 重い作業を別のクリーンなコンテキストで実行する
-    実装: Agent ツールで新しいサブエージェントを起動
+  Delegate to Subagent:
+    method: Offload heavy work to a fresh context
+    implementation: Spawn a new subagent via the Agent tool
 
-  セッション分割:
-    方法: 長いセッションを意図的に区切る
-    実装: "10回以上のツール呼び出し後、進捗を記録して新セッションを開始"
+  Session Splitting:
+    method: Intentionally break long sessions into segments
+    implementation: "After 10+ tool calls, record progress and start a new session"

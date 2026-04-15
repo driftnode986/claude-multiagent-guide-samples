@@ -1,9 +1,9 @@
-## 2026-04-09 セッション1
-- 完了: プロジェクト初期化、DB接続、ユーザーモデル作成
-- コミット: a1b2c3d "feat: add user model and database connection"
-- 次のステップ: 認証エンドポイントの実装
+## 2026-04-09 Session 1
+- Completed: Project initialization, DB connection, user model
+- Commit: a1b2c3d "feat: add user model and database connection"
+- Next steps: Implement authentication endpoints
 
-## 2026-04-09 セッション2
-- 完了: JWT認証、ログインAPI、トークンリフレッシュ
-- コミット: e4f5g6h "feat: implement JWT authentication"
-- 次のステップ: ユーザー登録とパスワードリセット
+## 2026-04-09 Session 2
+- Completed: JWT auth, login API, token refresh
+- Commit: e4f5g6h "feat: implement JWT authentication"
+- Next steps: User registration and password reset

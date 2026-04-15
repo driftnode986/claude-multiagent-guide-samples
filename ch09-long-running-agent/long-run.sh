@@ -1,6 +1,6 @@
 #!/bin/bash
-# 書籍「Claude Code マルチエージェント実践ガイド」第9章
-# long-run.sh — コンテナ内での実行を推奨
+# Multi-Agent Development with Claude Code -- Chapter 9
+# long-run.sh -- recommended to run inside a container
 
 while true; do
     COMMIT=$(git rev-parse --short=6 HEAD)

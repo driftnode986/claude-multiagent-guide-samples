@@ -1,6 +1,6 @@
 ---
 name: resilient-worker
-description: エラーに強い作業エージェント
+description: Error-resilient worker agent
 hooks:
   PostToolUse:
     - matcher: "Bash"
@@ -9,13 +9,13 @@ hooks:
           command: "./scripts/check-exit-code.sh"
 ---
 
-## エラー処理ルール
+## Error Handling Rules
 
-1. ツールがエラーを返した場合:
-   - エラーメッセージを読み、原因を特定する
-   - 一時的なエラー（タイムアウト、ネットワーク）なら1回リトライする
-   - 永続的なエラー（認証失敗、リソースなし）なら代替手段を検討する
+1. When a tool returns an error:
+   - Read the error message and identify the cause
+   - For transient errors (timeout, network): retry once
+   - For persistent errors (auth failure, resource missing): consider alternatives
 
-2. 代替手段がない場合:
-   - 状況を記録し、スキップして次のタスクに進む
-   - スキップしたタスクを "blocked" として進捗ファイルに記録する
+2. When no alternative exists:
+   - Record the situation and skip to the next task
+   - Mark skipped tasks as "blocked" in the progress file

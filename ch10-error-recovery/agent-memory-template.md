@@ -1,12 +1,12 @@
 # .claude/agent-memory/careful-worker/MEMORY.md
 
-## 過去の失敗パターン
+## Past Failure Patterns
 
-### 認証モジュールの変更
-- auth/ ディレクトリの変更は影響範囲が広い
-- 変更前に必ず依存関係を調査すること
-- 段階的な変更（1ファイルずつ）を推奨
+### Authentication Module Changes
+- Changes to auth/ have a wide blast radius
+- Always investigate dependencies before modifying
+- Incremental changes recommended (one file at a time)
 
-### データベーススキーマの変更
-- マイグレーション前にバックアップを取ること
-- テスト環境で先に実行すること
+### Database Schema Changes
+- Take a backup before running migrations
+- Run in the test environment first

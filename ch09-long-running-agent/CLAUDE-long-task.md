@@ -1,14 +1,14 @@
 # CLAUDE.md
 
-## 長期タスク管理
+## Long-Running Task Management
 
-### 進捗ファイル
-- `claude-progress.txt` に作業ログを記録すること
-- 各エントリは「日時、完了した作業、次のステップ」を含む
+### Progress File
+- Record work logs in `claude-progress.txt`
+- Each entry must include: timestamp, completed work, next steps
 
-### 作業ルール
-1. セッション開始時に `claude-progress.txt` と `git log` を読む
-2. 最優先の未完了タスクを1つ選ぶ
-3. タスクを完了したら、テストを実行して確認する
-4. Gitにコミットし、進捗ファイルを更新する
-5. 環境をクリーンな状態に保つ（ビルドが通る状態）
+### Work Rules
+1. At session start, read `claude-progress.txt` and `git log`
+2. Pick the highest-priority incomplete task
+3. After completing a task, run tests to verify
+4. Commit to Git and update the progress file
+5. Keep the environment clean (build must pass)

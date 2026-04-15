@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""feature_list.json の指定 feature を passes:true に切替える。
+"""Set passes to true for the specified feature in feature_list.json.
 
-引数:
-    description: feature の description（完全一致）
-    feature_list.json: パス（省略時はカレント）
+Args:
+    description: The feature description (exact match)
+    feature_list.json: Path (defaults to current directory)
 
-一致が 0 件または複数件のときはエラー終了する。description を
-ユニークに保つことで、エージェントが誤って別の feature を
-完了扱いにする事故を防ぐ。
+Exits with an error if zero or multiple features match. Keeping
+descriptions unique prevents the agent from accidentally marking
+the wrong feature as complete.
 """
 
 from __future__ import annotations

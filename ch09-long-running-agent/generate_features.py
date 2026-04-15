@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
-"""features.txt から feature_list.json を生成する。
+"""Generate feature_list.json from features.txt.
 
-人間は features.txt を markdown 風に書き、このスクリプトが
-JSON に変換する。再生成しても既存の `passes: true` は引き継がれる
-ため、進捗を失わずに features.txt を編集できる。
+Humans write features.txt in a markdown-like format, and this script
+converts it to JSON. Regenerating preserves existing `passes: true`
+flags, so you can edit features.txt without losing progress.
 
-features.txt の書式:
+features.txt format:
 
-    # functional: ユーザーがログインできる
-    - メールアドレスを入力する
-    - パスワードを入力する
-    - ログインボタンをクリックする
+    # functional: User can log in
+    - Enter email
+    - Enter password
+    - Click the login button
 
-    # ui: サイドバーが折りたたまれる
-    - 折りたたみボタンをクリックする
-    - サイドバーが非表示になることを確認する
+    # ui: Sidebar collapses
+    - Click the collapse button
+    - Verify the sidebar is hidden
 
-`# <category>: <description>` で feature が始まり、`-` で steps を
-列挙する。空行は区切りとして無視される。
+`# <category>: <description>` starts a feature, and `-` lines list
+the steps. Blank lines are treated as separators.
 """
 
 from __future__ import annotations

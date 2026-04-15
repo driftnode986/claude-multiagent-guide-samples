@@ -1,14 +1,14 @@
-# NOTES.md（エージェントが自動生成・更新）
+# NOTES.md (auto-generated and updated by the agent)
 
-## 現在の作業状況
-- 認証モジュールのリファクタリング中
-- JWT検証ロジックを auth/jwt.ts に集約する方針
+## Current Work Status
+- Refactoring the authentication module
+- Consolidating JWT verification logic into auth/jwt.ts
 
-## 発見した問題
-- auth/middleware.ts:45 でトークン期限切れの処理が欠落
-- tests/auth.test.ts のテストが3件失敗中
+## Discovered Issues
+- auth/middleware.ts:45 is missing token expiration handling
+- 3 tests failing in tests/auth.test.ts
 
-## 次のステップ
-1. auth/jwt.ts の validateToken を修正
-2. テストを全件パスさせる
-3. auth/middleware.ts のリファクタリング
+## Next Steps
+1. Fix validateToken in auth/jwt.ts
+2. Get all tests passing
+3. Refactor auth/middleware.ts
